@@ -1,13 +1,13 @@
-import { TextField, Typography } from "@mui/material";
+import { TextField } from "@mui/material";
 import { Box } from "@mui/system";
-import { useContext, useEffect, useRef, useState } from "react";
-import { backgroundFarData, backgroundFarType } from "../../data/backgroundFarData";
-import { DataContext } from "../../data/context/dataContext";
+import { useContext } from "react";
+import { backgroundFarType } from "../../data/backgroundFarData";
 import { ColorBox } from "../../components/ColorBox";
 import { DoesBackgroundFarTypeUseSecondColor } from "../../helper/colorUseDecider";
+import { backgroundFarContext } from "../../data/context/backgroundFarContext";
 
 export function BackgroundFarInterface() {
-    var data = useContext(DataContext);
+    var { backgroundFarData, setBackgroundFarData } = useContext(backgroundFarContext);
 
     const backgroundFarTypes = [
         {
@@ -16,35 +16,19 @@ export function BackgroundFarInterface() {
         }
     ]
 
-    const backgroundFarDataRef = useRef<backgroundFarData>(data?.background.farData!);
-    const [backgroundType, setBackgroundType] = useState<backgroundFarType>(data?.background.farData.backgroundType ?? backgroundFarType.blueSky);
-    const [firstColor, setFirstColor] = useState<string>(backgroundFarDataRef.current.firstColor);
-    const [secondColor, setSecondColor] = useState<string>(backgroundFarDataRef.current.secondColor);
-    const [useSecondColor, setUseSecondColor] = useState<boolean>(true);
+    function setBackgroundType(value: backgroundFarType) {
+        const useSecondColor = DoesBackgroundFarTypeUseSecondColor(value);
 
-    const onTypeChange = (newValue: backgroundFarType) => {
-        backgroundFarDataRef.current.useSecondColor = DoesBackgroundFarTypeUseSecondColor(newValue);
-        setUseSecondColor(backgroundFarDataRef.current.useSecondColor);
-        setBackgroundType(newValue);
-    };
+        setBackgroundFarData({ ...backgroundFarData, backgroundType: value, useSecondColor: useSecondColor })
+    }
 
-    useEffect(() => {
-        backgroundFarDataRef.current.backgroundType = backgroundType;
-        const backgroundContainer = { ...data?.background!, backgroundFarData: backgroundFarDataRef.current }
-        data?.setBackgroundContainer(backgroundContainer);
-    }, [backgroundType]);
+    function setFirstColor(value: string) {
+        setBackgroundFarData({ ...backgroundFarData, firstColor: value })
+    }
 
-    useEffect(() => {
-        backgroundFarDataRef.current.firstColor = firstColor;
-        const backgroundContainer = { ...data?.background!, backgroundFarData: backgroundFarDataRef.current }
-        data?.setBackgroundContainer(backgroundContainer);
-    }, [firstColor]);
-
-    useEffect(() => {
-        backgroundFarDataRef.current.secondColor = secondColor;
-        const backgroundContainer = { ...data?.background!, backgroundFarData: backgroundFarDataRef.current }
-        data?.setBackgroundContainer(backgroundContainer);
-    }, [secondColor]);
+    function setSecondColor(value: string) {
+        setBackgroundFarData({ ...backgroundFarData, secondColor: value })
+    }
 
     return (
         <Box
@@ -58,8 +42,8 @@ export function BackgroundFarInterface() {
                     select
                     label="Type"
                     fullWidth
-                    value={backgroundType}
-                    onChange={(event) => onTypeChange((Number(event.target.value)))}
+                    value={backgroundFarData.backgroundType}
+                    onChange={(event) => setBackgroundType((Number(event.target.value)))}
                 >
                     {backgroundFarTypes.map((option) => (
                         <option key={option.value} value={option.value}>
@@ -70,15 +54,15 @@ export function BackgroundFarInterface() {
             </Box>
             <Box
                 gridArea="FirstColor">
-                <ColorBox color={firstColor}
+                <ColorBox color={backgroundFarData.firstColor}
                     setColor={setFirstColor}
                     isActive={true} />
             </Box>
             <Box
                 gridArea="SecondColor">
-                <ColorBox color={secondColor}
+                <ColorBox color={backgroundFarData.secondColor}
                     setColor={setSecondColor}
-                    isActive={useSecondColor} />
+                    isActive={backgroundFarData.useSecondColor} />
             </Box>
         </Box >
     )

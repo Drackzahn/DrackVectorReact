@@ -40,8 +40,8 @@ function BlueSkyGrafic(props: IBackgroundFarGraficProps) {
         y: height
     }
 
-    const firstColor = data?.background.farData.firstColor ?? "#FFFFFF";
-    const secondColor = data?.background.farData.secondColor ?? "#FFFFFF";
+    const firstColor = props.background?.firstColor ?? "#FFFFFF";
+    const secondColor = props.background?.secondColor ?? "#FFFFFF";
 
     return (
         <Rect

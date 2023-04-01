@@ -15,8 +15,9 @@ export function BackgroundGroundGrafic(props: IBackgroundGroundGraficProps) {
         )
 
     if (props.background?.type === backgroundGroundType.flatColor)
-        return (<FlatColorGrafic background={props.background}
-        />)
+        return (
+            <FlatColorGrafic background={props.background}
+            />)
 
     //Fallback Value
     return (
