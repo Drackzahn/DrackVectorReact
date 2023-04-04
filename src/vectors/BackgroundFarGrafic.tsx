@@ -11,7 +11,7 @@ export interface IBackgroundFarGraficProps {
 export function BackgroundFarGrafic(props: IBackgroundFarGraficProps) {
     if (props.background === null)
         return (
-            <Box />
+            null
         )
 
     if (props.background?.backgroundType === backgroundFarType.blueSky)
@@ -20,7 +20,7 @@ export function BackgroundFarGrafic(props: IBackgroundFarGraficProps) {
 
     //Fallback Value
     return (
-        <CircularProgress />
+        null
     )
 }
 

@@ -3,6 +3,7 @@ import { backgroundGroundData, backgroundGroundType } from "../data/backgroundGr
 import { useContext } from "react";
 import { DataContext } from "../data/context/dataContext";
 import { Rect } from "react-konva";
+import { FallbackGrafic } from "./FallbackGrafic";
 
 export interface IBackgroundGroundGraficProps {
     background: backgroundGroundData | undefined;
@@ -11,7 +12,7 @@ export interface IBackgroundGroundGraficProps {
 export function BackgroundGroundGrafic(props: IBackgroundGroundGraficProps) {
     if (props.background === null)
         return (
-            <Box />
+            <FallbackGrafic />
         )
 
     if (props.background?.type === backgroundGroundType.flatColor)
@@ -21,7 +22,7 @@ export function BackgroundGroundGrafic(props: IBackgroundGroundGraficProps) {
 
     //Fallback Value
     return (
-        <CircularProgress />
+        <FallbackGrafic />
     )
 }
 
@@ -38,10 +39,13 @@ function FlatColorGrafic(props: IBackgroundGroundGraficProps) {
 
     return (
         <Rect
+            key={props.background?.id}
+            id={props.background?.id}
             fill={color}
             x={0}
             y={verticalStartPosition}
             height={verticalEndPosition}
-            width={width} />
+            width={width}
+        />
     )
 }

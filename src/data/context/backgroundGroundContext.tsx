@@ -1,6 +1,7 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useEffect, useState } from "react";
 import { backgroundGroundData } from "../backgroundGroundData";
 import { v4 as uuidv4 } from 'uuid'
+import { CreateNewBackgroundGroundData } from "../../helper/factory";
 
 export interface IBackgroundGroundContext {
     backgroundGroundDatas: backgroundGroundData[];
@@ -33,13 +34,12 @@ export const backgroundGroundContext = React.createContext<IBackgroundGroundCont
 });
 
 export function BackgroundGroundContext(props: PropsWithChildren) {
-
     const [groundDatas, setGroundDatas] = useState<backgroundGroundData[]>([]);
     const [selectedGround, setSelectedGround] = useState<backgroundGroundData | null>(null);
 
     function addGround(value: backgroundGroundData) {
-        groundDatas.push(value);
-        setGroundDatas(groundDatas);
+        const newGrounds = groundDatas.concat(value);
+        setGroundDatas(newGrounds);
         setSelectedGround(value);
     }
 
@@ -65,8 +65,7 @@ export function BackgroundGroundContext(props: PropsWithChildren) {
 
     function duplicateGround(value: backgroundGroundData) {
         value.id = uuidv4();
-        groundDatas.push(value);
-        setGroundDatas(groundDatas);
+        setGroundDatas(groundDatas.concat(value));
         setSelectedGround(value);
     }
 

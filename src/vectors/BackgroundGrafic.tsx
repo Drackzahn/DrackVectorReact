@@ -1,10 +1,13 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Stage, Layer, Group } from "react-konva"
 import { DataContext } from "../data/context/dataContext";
 import { BackgroundFarGrafic } from "./BackgroundFarGrafic";
 import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
 import { backgroundGroundContext } from "../data/context/backgroundGroundContext";
+import { backgroundGroundData } from "../data/backgroundGroundData";
+import { CreateNewBackgroundGroundData } from "../helper/factory";
+import React from "react";
 
 export function BackgroundGrafic() {
     var data = useContext(DataContext);
@@ -12,13 +15,9 @@ export function BackgroundGrafic() {
     return (
         <Stage height={data?.stageHeight} width={data?.stageWidth}>
             <Layer>
-                {/* Ground Group */}
-                <BackgroundGroundsGraficContainer />
-            </Layer>
-            <Layer>
-                {/* Far Group */}
                 <BackgroundFarGraficContainer />
             </Layer>
+            <BackgroundGroundsGraficContainer />
         </Stage >
     )
 }
@@ -35,10 +34,11 @@ export function BackgroundGroundsGraficContainer() {
     var data = useContext(backgroundGroundContext);
 
     return (
-        <Group>
-            {data.backgroundGroundDatas.sort(x => x.layerPosition).map(background => {
+        <Layer>
+            {data.backgroundGroundDatas.sort(x => x.layerPosition).map((background) => (
                 <BackgroundGroundGrafic background={background} />
-            })}
-        </Group>
+            )
+            )}
+        </Layer>
     )
 }
