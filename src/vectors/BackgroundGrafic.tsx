@@ -35,10 +35,9 @@ export function BackgroundGroundsGraficContainer() {
 
     return (
         <Layer>
-            {data.backgroundGroundDatas.sort(x => x.layerPosition).map((background) => (
+            {data.datas.sort(x => x.layerPosition).map((background) => (
                 <BackgroundGroundGrafic background={background} />
-            )
-            )}
+            ))}
         </Layer>
     )
 }

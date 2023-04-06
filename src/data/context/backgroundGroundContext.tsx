@@ -2,33 +2,27 @@ import React, { PropsWithChildren, useEffect, useState } from "react";
 import { backgroundGroundData } from "../backgroundGroundData";
 import { v4 as uuidv4 } from 'uuid'
 import { CreateNewBackgroundGroundData } from "../../helper/factory";
+import { IDataContext } from "./iDataContext";
 
-export interface IBackgroundGroundContext {
-    backgroundGroundDatas: backgroundGroundData[];
-    selectedGroundData: backgroundGroundData | null
-    addGround: (value: backgroundGroundData) => void;
-    updateSelectedGround: (value: backgroundGroundData) => void;
-    deleteGround: (value: backgroundGroundData) => void;
-    duplicateGround: (value: backgroundGroundData) => void;
-    selectGround: (value: backgroundGroundData) => void;
+export interface IBackgroundGroundContext extends IDataContext<backgroundGroundData> {
 }
 
 export const backgroundGroundContext = React.createContext<IBackgroundGroundContext>({
-    backgroundGroundDatas: [],
-    selectedGroundData: null,
-    addGround: (value: backgroundGroundData) => {
+    datas: [],
+    selectedData: null,
+    add: (value: backgroundGroundData) => {
         console.info(value);
     },
-    updateSelectedGround: (value: backgroundGroundData) => {
+    updateSelected: (value: backgroundGroundData) => {
         console.info(value);
     },
-    deleteGround: (value: backgroundGroundData) => {
+    delete: (value: backgroundGroundData) => {
         console.info(value);
     },
-    duplicateGround: (value: backgroundGroundData) => {
+    duplicate: (value: backgroundGroundData) => {
         console.info(value);
     },
-    selectGround: (value: backgroundGroundData) => {
+    select: (value: backgroundGroundData) => {
         console.info(value);
     }
 });
@@ -76,13 +70,13 @@ export function BackgroundGroundContext(props: PropsWithChildren) {
     return (
         <backgroundGroundContext.Provider value={
             {
-                backgroundGroundDatas: groundDatas,
-                selectedGroundData: selectedGround,
-                addGround: addGround,
-                updateSelectedGround: updateSelectedGround,
-                deleteGround: deleteGround,
-                duplicateGround: duplicateGround,
-                selectGround: selectGround
+                datas: groundDatas,
+                selectedData: selectedGround,
+                add: addGround,
+                updateSelected: updateSelectedGround,
+                delete: deleteGround,
+                duplicate: duplicateGround,
+                select: selectGround
             }}>
             {props.children}
         </backgroundGroundContext.Provider >
