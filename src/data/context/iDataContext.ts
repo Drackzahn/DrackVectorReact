@@ -1,4 +1,10 @@
-export interface IDataContext<T> {
+export interface IDataBase {
+    id: string;
+    name: string;
+    layerPosition: number;
+}
+
+export interface IDataContext<T extends IDataBase> {
     datas: T[];
     selectedData: T | null
     add: (value: T) => void;
