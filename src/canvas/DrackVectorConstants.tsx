@@ -1,0 +1,1 @@
+export const StandardHeight = 1080;

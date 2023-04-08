@@ -1,9 +1,9 @@
-import { Box, CircularProgress } from "@mui/material";
 import { backgroundGroundData, backgroundGroundType } from "../data/backgroundGroundData";
 import { useContext } from "react";
 import { DataContext } from "../data/context/dataContext";
 import { Rect } from "react-konva";
 import { FallbackGrafic } from "./FallbackGrafic";
+import { GetFillingWidth, GetFillingHeight } from "../helper/getFillSizes";
 
 export interface IBackgroundGroundGraficProps {
     background: backgroundGroundData | undefined;
@@ -29,8 +29,8 @@ export function BackgroundGroundGrafic(props: IBackgroundGroundGraficProps) {
 function FlatColorGrafic(props: IBackgroundGroundGraficProps) {
     var data = useContext(DataContext);
 
-    const width = data?.stageWidth ?? 0;
-    const height = data?.stageHeight ?? 0;
+    const width = GetFillingWidth(data);
+    const height = GetFillingHeight(data);
 
     const verticalStartPosition = props.background?.verticalPosition ?? 0;
     const verticalEndPosition = height - verticalStartPosition;

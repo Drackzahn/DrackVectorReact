@@ -1,24 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { Stage, Layer, Group } from "react-konva"
-import { DataContext } from "../data/context/dataContext";
+import { useContext } from "react";
+import { Layer } from "react-konva"
 import { BackgroundFarGrafic } from "./BackgroundFarGrafic";
 import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
 import { backgroundGroundContext } from "../data/context/backgroundGroundContext";
-import { backgroundGroundData } from "../data/backgroundGroundData";
-import { CreateNewBackgroundGroundData } from "../helper/factory";
-import React from "react";
+import { ScalingStage } from "../canvas/ScalingStage";
 
 export function BackgroundGrafic() {
-    var data = useContext(DataContext);
-
     return (
-        <Stage height={data?.stageHeight} width={data?.stageWidth}>
+        <ScalingStage>
             <Layer>
                 <BackgroundFarGraficContainer />
             </Layer>
             <BackgroundGroundsGraficContainer />
-        </Stage >
+        </ScalingStage >
     )
 }
 
@@ -36,7 +31,8 @@ export function BackgroundGroundsGraficContainer() {
     return (
         <Layer>
             {data.datas.sort(x => x.layerPosition).map((background) => (
-                <BackgroundGroundGrafic background={background} />
+                <BackgroundGroundGrafic background={background}
+                    key={background.id} />
             ))}
         </Layer>
     )

@@ -1,8 +1,8 @@
-import { Box, CircularProgress } from "@mui/material";
 import { useContext } from "react";
 import { Rect } from "react-konva";
 import { backgroundFarData, backgroundFarType } from "../data/backgroundFarData";
 import { DataContext } from "../data/context/dataContext";
+import { GetFillingHeight, GetFillingWidth } from "../helper/getFillSizes";
 
 export interface IBackgroundFarGraficProps {
     background: backgroundFarData | undefined;
@@ -27,8 +27,8 @@ export function BackgroundFarGrafic(props: IBackgroundFarGraficProps) {
 function BlueSkyGrafic(props: IBackgroundFarGraficProps) {
     var data = useContext(DataContext);
 
-    const width = data?.stageWidth ?? 0;
-    const height = data?.stageHeight ?? 0;
+    const width = GetFillingWidth(data);
+    const height = GetFillingHeight(data);
 
     const linearStartPoint = {
         x: width / 2,

@@ -85,8 +85,9 @@ export function DataSelectorHandler<T extends IDataBase>(props: IDataSelectorHan
                     {props.dataContext.datas.length === 0 ? <Typography>No Elements</Typography>
                         : props.dataContext.datas.map(data => (
                             <Button
-                                variant={data.id === props.dataContext.selectedData?.id ? "contained" : "outlined"}
+                                variant={data.id === props.dataContext.selectedData?.id ? "outlined" : "text"}
                                 onClick={() => changeSelectedElement(data)}
+                                key={data.id}
                             >
                                 <Typography>{data.layerPosition} - {data.name}</Typography>
                             </Button>
