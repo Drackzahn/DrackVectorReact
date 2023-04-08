@@ -6,6 +6,8 @@ import { DoesBackgroundGroundUseSecondColor, DoesBackgroundGroundUseThirdColor }
 import { CreateNewBackgroundGroundData } from "../../helper/factory";
 import { backgroundGroundContext } from "../../data/context/backgroundGroundContext";
 import { DataSelectorHandler } from "../../components/DataSelectorHandler";
+import { DrackSlider } from "../../components/DrackSlider";
+import { StandardHeight } from "../../canvas/DrackVectorConstants";
 
 export function BackgroundGroundInterface() {
     var groundContext = useContext(backgroundGroundContext);
@@ -18,15 +20,15 @@ export function BackgroundGroundInterface() {
     ]
 
     function setFirstColor(newValue: string) {
-        groundContext.updateSelected({ ...groundContext.selectedData!, firstColor: newValue });
+        groundContext.updateSelected({ ...groundContext.selectedData!, color1Hex: newValue });
     }
 
     function setSecondColor(newValue: string) {
-        groundContext.updateSelected({ ...groundContext.selectedData!, secondColor: newValue });
+        groundContext.updateSelected({ ...groundContext.selectedData!, color2Hex: newValue });
     }
 
     function setThirdColor(newValue: string) {
-        groundContext.updateSelected({ ...groundContext.selectedData!, thirdColor: newValue });
+        groundContext.updateSelected({ ...groundContext.selectedData!, color3Hex: newValue });
     }
 
     function onNameChange(newValue: string) {
@@ -41,11 +43,20 @@ export function BackgroundGroundInterface() {
         groundContext.updateSelected({ ...groundContext.selectedData!, verticalPosition: newValue });
     }
 
+    function setHeight(newValue: number) {
+        groundContext.updateSelected({ ...groundContext.selectedData!, height: newValue });
+    }
+
     const onTypeChange = (newValue: backgroundGroundType) => {
         const useSecondColor = DoesBackgroundGroundUseSecondColor(newValue);
         const useThirdColor = DoesBackgroundGroundUseThirdColor(newValue);
 
-        groundContext.updateSelected({ ...groundContext.selectedData!, type: newValue, useSecondColor: useSecondColor, useThirdColor: useThirdColor });
+        groundContext.updateSelected({
+            ...groundContext.selectedData!,
+            type: newValue,
+            color2IsActive: useSecondColor,
+            color3IsActive: useThirdColor
+        });
     };
 
     return (
@@ -53,43 +64,41 @@ export function BackgroundGroundInterface() {
             display="grid"
             gridTemplateAreas="'dataArea selectionArea'"
             gridTemplateColumns="auto auto"
+            gridTemplateRows="1fr"
             gap={4}>
 
             <Box
                 gridArea="selectionArea"
-                borderLeft={1}
                 padding={2}>
                 <DataSelectorHandler dataContext={groundContext}
                     createNew={CreateNewBackgroundGroundData} />
             </Box>
 
-            <Box
-                gridArea="dataArea"
-                display="grid"
-                gridTemplateAreas="'Name .' 'Type LayerPosition' 'Colors Colors' 'Divider Divider' 'VerticalPositon .'"
-                gridTemplateColumns="auto auto"
-                gap={4}>
-
+            {groundContext.selectedData !== null &&
                 <Box
-                    gridArea="Divider">
-                    <Divider />
-                </Box>
+                    gridArea="dataArea"
+                    display="grid"
+                    gridTemplateAreas="'Name' 'Type' 'LayerPosition' 'Colors' 'Divider' 'VerticalPositon' 'Height'"
+                    gridTemplateColumns="auto"
+                    gap={4}>
 
-                <Box
-                    gridArea="Name">
-                    {groundContext.selectedData !== null &&
+                    <Box
+                        gridArea="Divider">
+                        <Divider />
+                    </Box>
+
+                    <Box
+                        gridArea="Name">
                         <TextField
                             label="Name"
                             fullWidth
                             value={groundContext.selectedData!.name}
                             onChange={(event) => onNameChange((event.target.value))}
                         />
-                    }
-                </Box>
+                    </Box>
 
-                <Box
-                    gridArea="Type">
-                    {groundContext.selectedData !== null &&
+                    <Box
+                        gridArea="Type">
                         <TextField
                             select
                             label="Type"
@@ -103,47 +112,39 @@ export function BackgroundGroundInterface() {
                                 </option>
                             ))}
                         </TextField>
-                    }
-                </Box>
+                    </Box>
 
-                <Box
-                    gridArea="Colors"
-                    display="grid"
-                    gridTemplateAreas="'First Second Third .'"
-                    gridTemplateColumns="1fr 1fr 1fr 1fr">
                     <Box
-                        gridArea="First"
-                    >
-                        {groundContext.selectedData !== null &&
-                            <ColorBox color={groundContext.selectedData!.firstColor}
+                        gridArea="Colors"
+                        display="grid"
+                        gridTemplateAreas="'First Second Third'"
+                        gridTemplateColumns="1fr 1fr 1fr">
+                        <Box
+                            gridArea="First"
+                        >
+                            <ColorBox color={groundContext.selectedData!.color1Hex}
                                 setColor={setFirstColor}
                                 isActive={true} />
-                        }
-                    </Box>
-                    <Box
-                        gridArea="Second"
-                    >
-                        {groundContext.selectedData !== null &&
-                            <ColorBox color={groundContext.selectedData!.secondColor}
+                        </Box>
+                        <Box
+                            gridArea="Second"
+                        >
+                            <ColorBox color={groundContext.selectedData!.color2Hex}
                                 setColor={setSecondColor}
-                                isActive={groundContext.selectedData!.useSecondColor} />
-                        }
-                    </Box>
-                    <Box
-                        gridArea="Third"
-                    >
-                        {groundContext.selectedData !== null &&
-                            <ColorBox color={groundContext.selectedData!.thirdColor}
+                                isActive={groundContext.selectedData!.color2IsActive} />
+                        </Box>
+                        <Box
+                            gridArea="Third"
+                        >
+                            <ColorBox color={groundContext.selectedData!.color3Hex}
                                 setColor={setThirdColor}
-                                isActive={groundContext.selectedData!.useThirdColor} />
-                        }
+                                isActive={groundContext.selectedData!.color3IsActive} />
+                        </Box>
                     </Box>
-                </Box>
 
-                <Box
-                    gridArea="LayerPosition"
-                >
-                    {groundContext.selectedData !== null &&
+                    <Box
+                        gridArea="LayerPosition"
+                    >
                         <TextField
                             value={groundContext.selectedData.layerPosition}
                             onChange={(event) => setCurrentLayer(Number(event.target.value))}
@@ -151,24 +152,31 @@ export function BackgroundGroundInterface() {
                             type="number"
                             label="Layer"
                         />
-                    }
-                </Box>
+                    </Box>
 
-                <Box
-                    gridArea="VerticalPositon"
-                >
-                    {groundContext.selectedData !== null &&
-                        <TextField
-                            value={groundContext.selectedData.verticalPosition}
-                            onChange={(event) => setVerticalPositionLayer(Number(event.target.value))}
-                            fullWidth
-                            type="number"
+                    <Box
+                        gridArea="VerticalPositon"
+                    >
+                        <DrackSlider
                             label="Vertical Position"
-                        />
-                    }
-                </Box>
+                            maxValue={StandardHeight}
+                            minValue={0}
+                            selectedValue={groundContext.selectedData.verticalPosition}
+                            updatedSelectedValue={setVerticalPositionLayer} />
+                    </Box>
 
-            </Box>
+                    <Box
+                        gridArea="Height"
+                    >
+                        <DrackSlider
+                            label="Height"
+                            maxValue={StandardHeight}
+                            minValue={0}
+                            selectedValue={groundContext.selectedData.height}
+                            updatedSelectedValue={setHeight} />
+                    </Box>
+                </Box>
+            }
         </Box>
     )
 }

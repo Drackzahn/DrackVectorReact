@@ -1,1 +1,1 @@
-export const StandardHeight = 1080;
+export const StandardHeight = 1000;

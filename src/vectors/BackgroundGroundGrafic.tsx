@@ -30,12 +30,12 @@ function FlatColorGrafic(props: IBackgroundGroundGraficProps) {
     var data = useContext(DataContext);
 
     const width = GetFillingWidth(data);
-    const height = GetFillingHeight(data);
+    const height = props.background!.height;
 
     const verticalStartPosition = props.background?.verticalPosition ?? 0;
     const verticalEndPosition = height - verticalStartPosition;
 
-    const color = props.background?.firstColor ?? "#FFFFFF";
+    const color = props.background?.color1Hex ?? "#FFFFFF";
 
     return (
         <Rect

@@ -27,10 +27,12 @@ export function ColorBox(props: IColorBoxProps) {
                 onClick={handleOpen}
                 variant="outlined"
                 style={{
-                    backgroundColor: props.color,
-                    height: "40px"
+                    backgroundColor: props.isActive ? props.color : "#000000",
+                    height: "40px",
+                    opacity: props.isActive ? 1 : 0.1
                 }}
-                disabled={!props.isActive}>
+                disabled={!props.isActive}
+            >
             </Button>
 
             <Modal open={isModalOpen}

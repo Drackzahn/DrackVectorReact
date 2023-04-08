@@ -1,13 +1,14 @@
-import { Card, CardContent, CardHeader, Tab, Tabs, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, Paper, Switch, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { PropsWithChildren, useState } from "react";
 import { BackgroundFarInterface } from "./background/BackgroundFarInterface";
 import { BackgroundGroundInterface } from "./background/BackgroundGroundInterface";
+import { DoorFront, Grass, Wallpaper } from "@mui/icons-material";
 
 enum tabMenuEntries {
     farBackground = 0,
-    middleBackground = 1,
-    groundBackground = 2
+    groundBackground = 1,
+    middleBackground = 2,
 }
 
 interface ITabPanelProps {
@@ -24,7 +25,12 @@ function TabPanel(props: PropsWithChildren<ITabPanelProps>) {
 
     return (
         <Card
-            variant="elevation">
+            variant="elevation"
+            style={{
+                display: 'block',
+                height: '100%'
+            }}
+        >
             <CardHeader
                 title={header} />
             <CardContent>
@@ -37,6 +43,7 @@ function TabPanel(props: PropsWithChildren<ITabPanelProps>) {
 export function UserInterfaceTabs() {
 
     const [selectedValue, setSelectedValue] = useState<number>(0);
+    const [isInterfaceVisible, setIsInterfaceVisible] = useState<boolean>(true);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setSelectedValue(newValue);
@@ -53,32 +60,56 @@ export function UserInterfaceTabs() {
             <Box
                 gridArea="Tabs"
                 margin={2}>
-                <Tabs
-                    orientation="horizontal"
-                    variant="standard"
-                    value={selectedValue}
-                    onChange={handleChange}>
-                    <Tab label="Background Far" tabIndex={tabMenuEntries.farBackground} />
-                    <Tab label="Background Mid" tabIndex={tabMenuEntries.groundBackground} />
-                    <Tab label="Background Ground" tabIndex={tabMenuEntries.middleBackground} />
-                </Tabs>
+                <Box display="grid"
+                    gridTemplateAreas="'InterfaceSwitch Tabs'"
+                    gridTemplateColumns="auto 1fr"
+                    columnGap={1}>
+                    <Box gridArea="InterfaceSwitch"
+                        display="inline-block">
+                        <Paper sx={{
+                            height: "100%"
+                        }}>
+                            <Switch
+                                checked={isInterfaceVisible}
+                                onChange={(event) => setIsInterfaceVisible(event.target.checked)}
+                            />
+                        </Paper>
+                    </Box>
+
+                    <Box gridArea="Tabs"
+                        visibility={isInterfaceVisible ? "visible" : "hidden"}>
+                        <Paper>
+                            <Tabs
+                                orientation="horizontal"
+                                variant="standard"
+                                value={selectedValue}
+                                onChange={handleChange}>
+                                <Tab icon={<Wallpaper />} tabIndex={tabMenuEntries.farBackground} />
+                                <Tab icon={<Grass />} tabIndex={tabMenuEntries.groundBackground} />
+                                <Tab icon={<DoorFront />} tabIndex={tabMenuEntries.middleBackground} />
+                            </Tabs>
+                        </Paper>
+
+                    </Box>
+                </Box>
             </Box>
 
             <Box
                 gridArea="OpenTab"
                 alignContent="flex-end"
-                padding={2}>
+                padding={1}
+                visibility={isInterfaceVisible ? "visible" : "hidden"}>
                 <TabPanel value={selectedValue} index={tabMenuEntries.farBackground}
                     header="Background Far">
                     <BackgroundFarInterface />
                 </TabPanel>
-                <TabPanel value={selectedValue} index={tabMenuEntries.groundBackground}
-                    header="Background Ground">
-                    <BackgroundGroundInterface />
-                </TabPanel>
                 <TabPanel value={selectedValue} index={tabMenuEntries.middleBackground}
                     header="Background Mid">
                     Middle
+                </TabPanel>
+                <TabPanel value={selectedValue} index={tabMenuEntries.groundBackground}
+                    header="Background Ground">
+                    <BackgroundGroundInterface />
                 </TabPanel>
             </Box>
         </Box>
