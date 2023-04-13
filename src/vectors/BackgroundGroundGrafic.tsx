@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { DataContext } from "../data/context/dataContext";
 import { Rect } from "react-konva";
 import { FallbackGrafic } from "./FallbackGrafic";
-import { GetFillingWidth, GetFillingHeight } from "../helper/getFillSizes";
+import { GetFillingWidth } from "../helper/getFillSizes";
 
 export interface IBackgroundGroundGraficProps {
     background: backgroundGroundData | undefined;

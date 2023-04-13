@@ -5,6 +5,7 @@ import { backgroundFarType } from "../../data/backgroundFarData";
 import { ColorBox } from "../../components/ColorBox";
 import { DoesBackgroundFarTypeUseSecondColor } from "../../helper/colorUseDecider";
 import { backgroundFarContext } from "../../data/context/backgroundFarContext";
+import { TypeSelector } from "../../components/elementInterface/TypeSelector";
 
 export function BackgroundFarInterface() {
     var { backgroundFarData, setBackgroundFarData } = useContext(backgroundFarContext);
@@ -38,19 +39,11 @@ export function BackgroundFarInterface() {
             gap={4}>
             <Box
                 gridArea="Type">
-                <TextField
-                    select
-                    label="Type"
-                    fullWidth
-                    value={backgroundFarData.backgroundType}
-                    onChange={(event) => setBackgroundType((Number(event.target.value)))}
-                >
-                    {backgroundFarTypes.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </TextField>
+                <TypeSelector
+                    selectedValue={backgroundFarData.backgroundType}
+                    onChange={setBackgroundType}
+                    values={backgroundFarTypes}
+                />
             </Box>
             <Box
                 gridArea="FirstColor">

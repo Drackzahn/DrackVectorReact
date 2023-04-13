@@ -1,12 +1,8 @@
 import { IDataBase } from "./context/iDataContext";
+import { IColorableElement3 } from "./items/baseInterfaces/ColorableElement";
 
-export interface backgroundGroundData extends IDataBase {
+export interface backgroundGroundData extends IDataBase, IColorableElement3 {
     type: backgroundGroundType,
-    color1Hex: string,
-    color2Hex: string,
-    color3Hex: string,
-    color2IsActive: boolean,
-    color3IsActive: boolean,
     verticalPosition: number,
     height: number
 }
@@ -14,3 +10,10 @@ export interface backgroundGroundData extends IDataBase {
 export enum backgroundGroundType {
     flatColor = 1
 }
+
+export const backgroundGroundTypesLocalization = [
+    {
+        value: backgroundGroundType.flatColor,
+        label: "Flat"
+    }
+]

@@ -1,7 +1,6 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 import { backgroundGroundData } from "../backgroundGroundData";
 import { v4 as uuidv4 } from 'uuid'
-import { CreateNewBackgroundGroundData } from "../../helper/factory";
 import { IDataContext } from "./iDataContext";
 
 export interface IBackgroundGroundContext extends IDataContext<backgroundGroundData> {

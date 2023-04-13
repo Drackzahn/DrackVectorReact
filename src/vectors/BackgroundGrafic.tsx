@@ -5,6 +5,8 @@ import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
 import { backgroundGroundContext } from "../data/context/backgroundGroundContext";
 import { ScalingStage } from "../canvas/ScalingStage";
+import { backgroundSimpleItemContext } from "../data/context/backgroundSimpleItemContext";
+import { SimpleItemGrafic } from "./SimpleItemGrafic";
 
 export function BackgroundGrafic() {
     return (
@@ -13,6 +15,7 @@ export function BackgroundGrafic() {
                 <BackgroundFarGraficContainer />
             </Layer>
             <BackgroundGroundsGraficContainer />
+            <BackgroundItemsGraficContainer />
         </ScalingStage >
     )
 }
@@ -33,6 +36,19 @@ export function BackgroundGroundsGraficContainer() {
             {data.datas.sort(x => x.layerPosition).map((background) => (
                 <BackgroundGroundGrafic background={background}
                     key={background.id} />
+            ))}
+        </Layer>
+    )
+}
+
+export function BackgroundItemsGraficContainer() {
+    var data = useContext(backgroundSimpleItemContext);
+
+    return (
+        <Layer>
+            {data.datas.sort(x => x.layerPosition).map((item) => (
+                <SimpleItemGrafic item={item}
+                    key={item.id} />
             ))}
         </Layer>
     )

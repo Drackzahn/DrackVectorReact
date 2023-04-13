@@ -1,35 +1,19 @@
 import { useContext } from "react";
-import { backgroundGroundData, backgroundGroundType } from "../../data/backgroundGroundData";
-import { Box, Button, Divider, Select, TextField, Typography } from "@mui/material";
-import { ColorBox } from "../../components/ColorBox";
-import { DoesBackgroundGroundUseSecondColor, DoesBackgroundGroundUseThirdColor } from "../../helper/colorUseDecider";
+import { backgroundGroundType, backgroundGroundTypesLocalization } from "../../data/backgroundGroundData";
+import { Box, Divider } from "@mui/material";
+import { DoesBackgroundGroundUseColors } from "../../helper/colorUseDecider";
 import { CreateNewBackgroundGroundData } from "../../helper/factory";
 import { backgroundGroundContext } from "../../data/context/backgroundGroundContext";
-import { DataSelectorHandler } from "../../components/DataSelectorHandler";
 import { DrackSlider } from "../../components/DrackSlider";
 import { StandardHeight } from "../../canvas/DrackVectorConstants";
+import { NameField } from "../../components/elementInterface/NameField";
+import { TypeSelector } from "../../components/elementInterface/TypeSelector";
+import { LayerSelector } from "../../components/elementInterface/LayerSelector";
+import { SelectedTabInterface } from "../../components/SelectedTabInterface";
+import { ColorableElement3InterfaceBase } from "../bases/ColorableElementInterfaceBase";
 
 export function BackgroundGroundInterface() {
     var groundContext = useContext(backgroundGroundContext);
-
-    const backgroundGroundTypes = [
-        {
-            value: backgroundGroundType.flatColor,
-            label: "Flat"
-        }
-    ]
-
-    function setFirstColor(newValue: string) {
-        groundContext.updateSelected({ ...groundContext.selectedData!, color1Hex: newValue });
-    }
-
-    function setSecondColor(newValue: string) {
-        groundContext.updateSelected({ ...groundContext.selectedData!, color2Hex: newValue });
-    }
-
-    function setThirdColor(newValue: string) {
-        groundContext.updateSelected({ ...groundContext.selectedData!, color3Hex: newValue });
-    }
 
     function onNameChange(newValue: string) {
         groundContext.updateSelected({ ...groundContext.selectedData!, name: newValue });
@@ -48,35 +32,22 @@ export function BackgroundGroundInterface() {
     }
 
     const onTypeChange = (newValue: backgroundGroundType) => {
-        const useSecondColor = DoesBackgroundGroundUseSecondColor(newValue);
-        const useThirdColor = DoesBackgroundGroundUseThirdColor(newValue);
+        const { useColor2, useColor3 } = DoesBackgroundGroundUseColors(newValue);
 
         groundContext.updateSelected({
             ...groundContext.selectedData!,
             type: newValue,
-            color2IsActive: useSecondColor,
-            color3IsActive: useThirdColor
+            color2IsActive: useColor2,
+            color3IsActive: useColor3
         });
     };
 
     return (
-        <Box
-            display="grid"
-            gridTemplateAreas="'dataArea selectionArea'"
-            gridTemplateColumns="auto auto"
-            gridTemplateRows="1fr"
-            gap={4}>
-
-            <Box
-                gridArea="selectionArea"
-                padding={2}>
-                <DataSelectorHandler dataContext={groundContext}
-                    createNew={CreateNewBackgroundGroundData} />
-            </Box>
-
+        <SelectedTabInterface
+            dataContext={groundContext}
+            createNew={CreateNewBackgroundGroundData}>
             {groundContext.selectedData !== null &&
                 <Box
-                    gridArea="dataArea"
                     display="grid"
                     gridTemplateAreas="'Name' 'Type' 'LayerPosition' 'Colors' 'Divider' 'VerticalPositon' 'Height'"
                     gridTemplateColumns="auto"
@@ -89,68 +60,33 @@ export function BackgroundGroundInterface() {
 
                     <Box
                         gridArea="Name">
-                        <TextField
-                            label="Name"
-                            fullWidth
+                        <NameField
                             value={groundContext.selectedData!.name}
-                            onChange={(event) => onNameChange((event.target.value))}
-                        />
+                            onChange={onNameChange} />
                     </Box>
 
                     <Box
                         gridArea="Type">
-                        <TextField
-                            select
-                            label="Type"
-                            fullWidth
-                            value={groundContext.selectedData!.type}
-                            onChange={(event) => onTypeChange((Number(event.target.value)))}
-                        >
-                            {backgroundGroundTypes.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </TextField>
+                        <TypeSelector
+                            selectedValue={groundContext.selectedData!.type}
+                            onChange={onTypeChange}
+                            values={backgroundGroundTypesLocalization}
+                        />
                     </Box>
 
                     <Box
-                        gridArea="Colors"
-                        display="grid"
-                        gridTemplateAreas="'First Second Third'"
-                        gridTemplateColumns="1fr 1fr 1fr">
-                        <Box
-                            gridArea="First"
-                        >
-                            <ColorBox color={groundContext.selectedData!.color1Hex}
-                                setColor={setFirstColor}
-                                isActive={true} />
-                        </Box>
-                        <Box
-                            gridArea="Second"
-                        >
-                            <ColorBox color={groundContext.selectedData!.color2Hex}
-                                setColor={setSecondColor}
-                                isActive={groundContext.selectedData!.color2IsActive} />
-                        </Box>
-                        <Box
-                            gridArea="Third"
-                        >
-                            <ColorBox color={groundContext.selectedData!.color3Hex}
-                                setColor={setThirdColor}
-                                isActive={groundContext.selectedData!.color3IsActive} />
-                        </Box>
+                        gridArea="Colors">
+                        <ColorableElement3InterfaceBase
+                            value={groundContext.selectedData!}
+                            onChange={groundContext.updateSelected} />
                     </Box>
 
                     <Box
                         gridArea="LayerPosition"
                     >
-                        <TextField
-                            value={groundContext.selectedData.layerPosition}
-                            onChange={(event) => setCurrentLayer(Number(event.target.value))}
-                            fullWidth
-                            type="number"
-                            label="Layer"
+                        <LayerSelector
+                            value={groundContext!.selectedData!.layerPosition}
+                            onChange={setCurrentLayer}
                         />
                     </Box>
 
@@ -161,7 +97,7 @@ export function BackgroundGroundInterface() {
                             label="Vertical Position"
                             maxValue={StandardHeight}
                             minValue={0}
-                            selectedValue={groundContext.selectedData.verticalPosition}
+                            selectedValue={groundContext!.selectedData!.verticalPosition}
                             updatedSelectedValue={setVerticalPositionLayer} />
                     </Box>
 
@@ -172,11 +108,11 @@ export function BackgroundGroundInterface() {
                             label="Height"
                             maxValue={StandardHeight}
                             minValue={0}
-                            selectedValue={groundContext.selectedData.height}
+                            selectedValue={groundContext!.selectedData!.height}
                             updatedSelectedValue={setHeight} />
                     </Box>
                 </Box>
             }
-        </Box>
+        </SelectedTabInterface>
     )
 }

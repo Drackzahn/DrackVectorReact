@@ -5,11 +5,11 @@ export interface IDrackSliderProps {
     minValue: number;
     selectedValue: number;
     label: string;
+    disabled?: boolean;
     updatedSelectedValue: (newValue: number) => void;
 }
 
 export function DrackSlider(props: IDrackSliderProps) {
-
     const handleChange = (event: Event, newValue: number | number[]) => {
         props.updatedSelectedValue(newValue as number);
     };
@@ -17,6 +17,8 @@ export function DrackSlider(props: IDrackSliderProps) {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         props.updatedSelectedValue(Number(event.target.value));
     };
+
+    const disabled = props.disabled ?? false;
 
     return (
         <Box display="grid"
@@ -26,7 +28,7 @@ export function DrackSlider(props: IDrackSliderProps) {
                 <Typography>{props.label}</Typography>
             </Box>
             <Box gridArea="ValueBox"
-                marginLeft={1}>
+                marginLeft={2}>
                 <Input
                     value={props.selectedValue}
                     size="small"
@@ -37,6 +39,7 @@ export function DrackSlider(props: IDrackSliderProps) {
                         max: props.maxValue,
                         type: 'number'
                     }}
+                    disabled={disabled}
                 />
             </Box>
             <Box gridArea="Slider">
@@ -46,6 +49,7 @@ export function DrackSlider(props: IDrackSliderProps) {
                     value={props.selectedValue}
                     valueLabelDisplay="auto"
                     onChange={handleChange}
+                    disabled={disabled}
                 />
             </Box>
         </Box>

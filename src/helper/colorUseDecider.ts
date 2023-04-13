@@ -1,5 +1,6 @@
 import { backgroundFarType } from "../data/backgroundFarData";
 import { backgroundGroundType } from "../data/backgroundGroundData";
+import { simpleItemDataType } from "../data/items/simpleItemData";
 
 export function DoesBackgroundFarTypeUseSecondColor(type: backgroundFarType) {
     switch (type) {
@@ -8,16 +9,18 @@ export function DoesBackgroundFarTypeUseSecondColor(type: backgroundFarType) {
     }
 }
 
-export function DoesBackgroundGroundUseSecondColor(type: backgroundGroundType) {
+export function DoesBackgroundGroundUseColors(type: backgroundGroundType): { useColor2: boolean, useColor3: boolean } {
     switch (type) {
         case backgroundGroundType.flatColor:
-            return false;
+            return { useColor2: false, useColor3: false };
     }
 }
 
-export function DoesBackgroundGroundUseThirdColor(type: backgroundGroundType) {
+export function DoesSimpleItemUseColors(type: simpleItemDataType): { useColor2: boolean, useColor3: boolean, useColor4: boolean, useColor5: boolean } {
     switch (type) {
-        case backgroundGroundType.flatColor:
-            return false;
+        case simpleItemDataType.circle:
+            return { useColor2: false, useColor3: false, useColor4: false, useColor5: false };
+        case simpleItemDataType.rectangle:
+            return { useColor2: false, useColor3: false, useColor4: false, useColor5: false };
     }
 }
