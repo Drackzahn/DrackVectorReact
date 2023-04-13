@@ -50,6 +50,7 @@ export function DrackSlider(props: IDrackSliderProps) {
                     valueLabelDisplay="auto"
                     onChange={handleChange}
                     disabled={disabled}
+                    size="small"
                 />
             </Box>
         </Box>

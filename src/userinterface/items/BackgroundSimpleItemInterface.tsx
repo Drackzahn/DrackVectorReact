@@ -12,6 +12,7 @@ import { LayerSelector } from "../../components/elementInterface/LayerSelector";
 import { MoveableElementInterfaceBase } from "../bases/MoveableElementInterfaceBase";
 import { SizeableElementInterfaceBase } from "../bases/SizeableElementInterfaceBase";
 import { HasBorderInterfaceBase } from "../bases/HasBorderInterfaceBase";
+import { HasOpacityInterfaceBase } from "../bases/HasOpacityInterfaceBase";
 
 export function BackgroundSimpleItemInterface() {
     var itemContext = useContext(backgroundSimpleItemContext);
@@ -48,11 +49,13 @@ export function BackgroundSimpleItemInterface() {
                 'Name' 
                 'Type' 
                 'Colors' 
+                'Opacity'
                 'Divider'
                 'LayerPosition'
                 'Position'
                 'Scaling' 
-                'Border'"
+                'Border'
+                "
                     gridTemplateColumns="auto"
                     gap={4}>
 
@@ -115,6 +118,15 @@ export function BackgroundSimpleItemInterface() {
                         gridArea="Border"
                     >
                         <HasBorderInterfaceBase
+                            value={itemContext.selectedData!}
+                            onChange={itemContext.updateSelected}
+                        />
+                    </Box>
+
+                    <Box
+                        gridArea="Opacity"
+                    >
+                        <HasOpacityInterfaceBase
                             value={itemContext.selectedData!}
                             onChange={itemContext.updateSelected}
                         />

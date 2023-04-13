@@ -68,6 +68,7 @@ export function CreateNewSimpleItemData(): simpleItemData {
         positionY: startPosition,
         borderColor: "#000000",
         borderThickness: 1,
-        isBorderActive: true
+        isBorderActive: true,
+        opacity: 1
     }
 }

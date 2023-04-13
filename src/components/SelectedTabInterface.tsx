@@ -1,12 +1,14 @@
 import { Box } from "@mui/material";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, useContext } from "react";
 import { IDataBase } from "../data/context/iDataContext";
 import { DataSelectorHandler, IDataSelectorHandlerProps } from "./DataSelectorHandler";
+import { DataContext } from "../data/context/dataContext";
 
 export interface ISelectedTabInterfaceProps<T extends IDataBase> extends IDataSelectorHandlerProps<T> {
 }
 
 export function SelectedTabInterface<T extends IDataBase>(props: PropsWithChildren<ISelectedTabInterfaceProps<T>>) {
+    const data = useContext(DataContext);
 
     return (
         <Box
@@ -24,7 +26,11 @@ export function SelectedTabInterface<T extends IDataBase>(props: PropsWithChildr
             </Box>
 
             {props.dataContext?.selectedData !== null &&
-                <Box gridArea="dataArea">
+                <Box gridArea="dataArea"
+                    sx={{
+                        overflowY: "auto"
+                    }}
+                    maxHeight={data.stageHeight - 300}>
                     {props.children}
                 </Box>
             }
