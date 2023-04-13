@@ -1,5 +1,5 @@
 import { IDataBase } from "./context/iDataContext";
-import { IColorableElement3 } from "./items/baseInterfaces/ColorableElement";
+import { IColorableElement3 } from "./baseInterfaces/ColorableElement";
 
 export interface backgroundGroundData extends IDataBase, IColorableElement3 {
     type: backgroundGroundType,

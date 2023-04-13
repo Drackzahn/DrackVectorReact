@@ -11,6 +11,7 @@ import { ColorableElement5InterfaceBase } from "../bases/ColorableElementInterfa
 import { LayerSelector } from "../../components/elementInterface/LayerSelector";
 import { MoveableElementInterfaceBase } from "../bases/MoveableElementInterfaceBase";
 import { SizeableElementInterfaceBase } from "../bases/SizeableElementInterfaceBase";
+import { HasBorderInterfaceBase } from "../bases/HasBorderInterfaceBase";
 
 export function BackgroundSimpleItemInterface() {
     var itemContext = useContext(backgroundSimpleItemContext);
@@ -50,7 +51,8 @@ export function BackgroundSimpleItemInterface() {
                 'Divider'
                 'LayerPosition'
                 'Position'
-                'Scaling' "
+                'Scaling' 
+                'Border'"
                     gridTemplateColumns="auto"
                     gap={4}>
 
@@ -109,6 +111,14 @@ export function BackgroundSimpleItemInterface() {
                         />
                     </Box>
 
+                    <Box
+                        gridArea="Border"
+                    >
+                        <HasBorderInterfaceBase
+                            value={itemContext.selectedData!}
+                            onChange={itemContext.updateSelected}
+                        />
+                    </Box>
                 </Box>
             }
         </SelectedTabInterface>

@@ -1,5 +1,5 @@
 import { Box, FormControlLabel, Switch } from "@mui/material";
-import { ISizeableElement } from "../../data/items/baseInterfaces/ISizeableElement";
+import { ISizeableElement } from "../../data/baseInterfaces/ISizeableElement";
 import { DrackSlider } from "../../components/DrackSlider";
 
 export interface ISizeableElementInterfaceBaseProps<T extends ISizeableElement> {

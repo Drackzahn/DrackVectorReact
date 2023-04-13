@@ -1,9 +1,10 @@
 import { IDataBase } from "../context/iDataContext";
-import { IColorableElement5 } from "./baseInterfaces/ColorableElement";
-import { IMoveableElement } from "./baseInterfaces/IMoveableElement";
-import { ISizeableElement } from "./baseInterfaces/ISizeableElement";
+import { IColorableElement5 } from "../baseInterfaces/ColorableElement";
+import { IMoveableElement } from "../baseInterfaces/IMoveableElement";
+import { ISizeableElement } from "../baseInterfaces/ISizeableElement";
+import { IHasBorder } from "../baseInterfaces/IHasBorder";
 
-export interface simpleItemData extends IMoveableElement, ISizeableElement, IDataBase, IColorableElement5 {
+export interface simpleItemData extends IMoveableElement, ISizeableElement, IDataBase, IColorableElement5, IHasBorder {
     simpleItemType: simpleItemDataType
 }
 

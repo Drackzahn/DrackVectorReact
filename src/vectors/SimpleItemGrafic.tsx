@@ -1,6 +1,7 @@
 import { Circle, Rect } from "react-konva";
 import { simpleItemData, simpleItemDataType } from "../data/items/simpleItemData";
 import { FallbackGrafic } from "./FallbackGrafic";
+import { GetHasBorderColor, GetHasBorderThickness } from "../data/baseInterfaces/IHasBorder";
 
 const BaseItemSize = 50;
 
@@ -46,6 +47,8 @@ function CircleGrafic(props: ISimpleItemGraficProps) {
             scaleY={props.item?.scaleY}
             height={BaseItemSize}
             width={BaseItemSize}
+            stroke={GetHasBorderColor(props.item!)}
+            strokeWidth={GetHasBorderThickness(props.item!, props.item!.scaleX)}
         />
     )
 }
@@ -64,6 +67,8 @@ function RectangleGrafic(props: ISimpleItemGraficProps) {
             scaleY={props.item?.scaleY}
             height={BaseItemSize}
             width={BaseItemSize}
+            stroke={GetHasBorderColor(props.item!)}
+            strokeWidth={GetHasBorderThickness(props.item!, props.item!.scaleX)}
         />
     )
 }

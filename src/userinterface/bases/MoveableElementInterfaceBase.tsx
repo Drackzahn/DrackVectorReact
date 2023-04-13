@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { IMoveableElement } from "../../data/items/baseInterfaces/IMoveableElement";
+import { IMoveableElement } from "../../data/baseInterfaces/IMoveableElement";
 import { DrackSlider } from "../../components/DrackSlider";
 import { DataContext } from "../../data/context/dataContext";
 import { useContext } from "react";

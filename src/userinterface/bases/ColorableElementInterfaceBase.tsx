@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { IColorableElement3, IColorableElement5 } from "../../data/items/baseInterfaces/ColorableElement";
+import { IColorableElement3, IColorableElement5 } from "../../data/baseInterfaces/ColorableElement";
 import { ColorBox } from "../../components/ColorBox";
 
 export interface IColorableElementInterfaceBaseProps<T> {
