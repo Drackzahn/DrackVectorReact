@@ -1,8 +1,11 @@
-import { Circle, Group, Layer, Rect } from "react-konva";
+import { Circle, Group, KonvaNodeComponent, Layer, Rect } from "react-konva";
 import { simpleItemData, simpleItemDataType } from "../data/items/simpleItemData";
 import { FallbackGrafic } from "./FallbackGrafic";
 import { GetHasBorderColor, GetHasBorderThickness } from "../data/baseInterfaces/IHasBorder";
+import { useEffect, useRef } from "react";
+import Konva from "konva";
 import React from "react";
+import { GroupConfig } from "konva/lib/Group";
 
 const BaseItemSize = 50;
 
@@ -15,6 +18,35 @@ export function SimpleItemGrafic(props: ISimpleItemGraficProps) {
         return (
             <FallbackGrafic />
         )
+
+    const groupRef: React.RefObject<Konva.Group> = React.createRef();
+
+    useEffect(() => {
+        if (groupRef.current !== null && props.item !== null) {
+            groupRef.current!.skew({
+                x: props.item!.skewX,
+                y: props.item!.skewY
+            })
+        }
+    })
+
+
+    return (
+        <Group
+            ref={groupRef}
+            x={props.item!.positionX}
+            y={props.item!.positionY}
+            scaleX={props.item!.scaleX}
+            scaleY={props.item!.scaleY}
+            opacity={props.item!.opacity}
+        >
+            <SimpleItemGraficInternal item={props.item} />
+        </Group>
+    )
+}
+
+function SimpleItemGraficInternal(props: ISimpleItemGraficProps) {
+
 
     if (props.item?.simpleItemType === simpleItemDataType.circle)
         return (
@@ -37,20 +69,12 @@ function CircleGrafic(props: ISimpleItemGraficProps) {
 
     return (
         <Circle
-            offsetX={-BaseItemSize / 2}
-            offsetY={-BaseItemSize / 2}
-            key={props.item?.id}
-            id={props.item?.id}
+            offsetY={BaseItemSize / 2}
             fill={color}
-            x={props.item?.positionX}
-            y={props.item?.positionY}
-            scaleX={props.item?.scaleX}
-            scaleY={props.item?.scaleY}
             height={BaseItemSize}
             width={BaseItemSize}
             stroke={GetHasBorderColor(props.item!)}
             strokeWidth={GetHasBorderThickness(props.item!, props.item!.scaleX)}
-            opacity={props.item!.opacity}
         />
     )
 }
@@ -60,18 +84,13 @@ function RectangleGrafic(props: ISimpleItemGraficProps) {
 
     return (
         <Rect
-            key={props.item?.id}
-            id={props.item?.id}
+            offsetY={BaseItemSize}
+            offsetX={BaseItemSize / 2}
             fill={color}
-            x={props.item?.positionX}
-            y={props.item?.positionY}
-            scaleX={props.item?.scaleX}
-            scaleY={props.item?.scaleY}
             height={BaseItemSize}
             width={BaseItemSize}
             stroke={GetHasBorderColor(props.item!)}
             strokeWidth={GetHasBorderThickness(props.item!, props.item!.scaleX)}
-            opacity={props.item!.opacity}
         />
     )
 }

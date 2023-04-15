@@ -13,6 +13,7 @@ import { MoveableElementInterfaceBase } from "../bases/MoveableElementInterfaceB
 import { SizeableElementInterfaceBase } from "../bases/SizeableElementInterfaceBase";
 import { HasBorderInterfaceBase } from "../bases/HasBorderInterfaceBase";
 import { HasOpacityInterfaceBase } from "../bases/HasOpacityInterfaceBase";
+import { SkewableInterfaceBase } from "../bases/SkewableInterfaceBase";
 
 export function BackgroundSimpleItemInterface() {
     var itemContext = useContext(backgroundSimpleItemContext);
@@ -54,6 +55,7 @@ export function BackgroundSimpleItemInterface() {
                 'LayerPosition'
                 'Position'
                 'Scaling' 
+                'Skew'
                 'Border'
                 "
                     gridTemplateColumns="auto"
@@ -109,6 +111,15 @@ export function BackgroundSimpleItemInterface() {
                         gridArea="Scaling"
                     >
                         <SizeableElementInterfaceBase
+                            value={itemContext.selectedData!}
+                            onChange={itemContext.updateSelected}
+                        />
+                    </Box>
+
+                    <Box
+                        gridArea="Skew"
+                    >
+                        <SkewableInterfaceBase
                             value={itemContext.selectedData!}
                             onChange={itemContext.updateSelected}
                         />

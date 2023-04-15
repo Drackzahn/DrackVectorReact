@@ -69,6 +69,9 @@ export function CreateNewSimpleItemData(): simpleItemData {
         borderColor: "#000000",
         borderThickness: 1,
         isBorderActive: true,
-        opacity: 1
+        opacity: 1,
+        skewX: 0,
+        skewY: 0,
+        combineSkew: true
     }
 }
