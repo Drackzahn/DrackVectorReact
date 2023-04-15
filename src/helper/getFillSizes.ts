@@ -2,7 +2,7 @@ import { StandardHeight } from "../canvas/DrackVectorConstants";
 import { IData } from "../data/context/dataContext";
 
 export function GetFillingHeight(data: IData): number {
-    return StandardHeight;
+    return StandardHeight / data.generalScaleFactor;
 }
 
 export function GetFillingWidth(data: IData): number {

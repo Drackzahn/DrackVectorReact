@@ -13,7 +13,7 @@ export interface IMoveableElementInterfaceBaseProps<T> {
 export function MoveableElementInterfaceBase<T extends IMoveableElement>(props: IMoveableElementInterfaceBaseProps<T>) {
     var dataContext = useContext(DataContext);
 
-    const maxXValue = (dataContext.stageWidth * dataContext.generalScaleFactor) + MaxMoveableDistanceOutsideBorder;
+    const maxXValue = (dataContext.stageWidth * dataContext.sizeScaleFactor) + MaxMoveableDistanceOutsideBorder;
     const minXValue = -MaxMoveableDistanceOutsideBorder;
 
     const maxYValue = StandardHeight + MaxMoveableDistanceOutsideBorder;
