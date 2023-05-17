@@ -5,7 +5,6 @@ import { GetHasBorderColor, GetHasBorderThickness } from "../data/baseInterfaces
 import { useEffect, useRef } from "react";
 import Konva from "konva";
 import React from "react";
-import { GroupConfig } from "konva/lib/Group";
 
 const BaseItemSize = 50;
 

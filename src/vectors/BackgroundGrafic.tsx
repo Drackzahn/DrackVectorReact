@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Layer } from "react-konva"
+import { Group, Layer } from "react-konva"
 import { BackgroundFarGrafic } from "./BackgroundFarGrafic";
 import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
@@ -7,15 +7,18 @@ import { backgroundGroundContext } from "../data/context/backgroundGroundContext
 import { ScalingStage } from "../canvas/ScalingStage";
 import { backgroundSimpleItemContext } from "../data/context/backgroundSimpleItemContext";
 import { SimpleItemGrafic } from "./SimpleItemGrafic";
+import { DrackLayer } from "../canvas/DrackLayer";
 
 export function BackgroundGrafic() {
     return (
         <ScalingStage>
-            <Layer>
-                <BackgroundFarGraficContainer />
-            </Layer>
-            <BackgroundGroundsGraficContainer />
-            <BackgroundItemsGraficContainer />
+            <DrackLayer isBackgroundLayer>
+                <Group>
+                    <BackgroundFarGraficContainer />
+                </Group>
+                <BackgroundGroundsGraficContainer />
+                <BackgroundItemsGraficContainer />
+            </DrackLayer>
         </ScalingStage >
     )
 }
@@ -32,12 +35,12 @@ export function BackgroundGroundsGraficContainer() {
     var data = useContext(backgroundGroundContext);
 
     return (
-        <Layer>
+        <Group>
             {data.datas.sort(x => x.layerPosition).map((background) => (
                 <BackgroundGroundGrafic background={background}
                     key={background.id} />
             ))}
-        </Layer>
+        </Group>
     )
 }
 
@@ -45,11 +48,11 @@ export function BackgroundItemsGraficContainer() {
     var data = useContext(backgroundSimpleItemContext);
 
     return (
-        <Layer>
+        <Group>
             {data.datas.sort(x => x.layerPosition).map((item) => (
                 <SimpleItemGrafic item={item}
                     key={item.id} />
             ))}
-        </Layer>
+        </Group>
     )
 }

@@ -3,14 +3,16 @@ import { Box } from "@mui/system";
 import { PropsWithChildren, useState } from "react";
 import { BackgroundFarInterface } from "./background/BackgroundFarInterface";
 import { BackgroundGroundInterface } from "./background/BackgroundGroundInterface";
-import { Category, DoorFront, Grass, Wallpaper } from "@mui/icons-material";
+import { Category, DoorFront, Grass, Visibility, Wallpaper } from "@mui/icons-material";
 import { BackgroundSimpleItemInterface } from "./items/BackgroundSimpleItemInterface";
+import { ExportAndViewInterface } from "./ExportAndViewInterface";
 
 enum tabMenuEntries {
     farBackground = 0,
     groundBackground = 1,
     middleBackground = 2,
     backgroundItems = 3,
+    exportAndView = 4
 }
 
 interface ITabPanelProps {
@@ -90,7 +92,7 @@ export function UserInterfaceTabs() {
                                 <Tab icon={<Grass />} tabIndex={tabMenuEntries.groundBackground} />
                                 <Tab icon={<DoorFront />} tabIndex={tabMenuEntries.middleBackground} />
                                 <Tab icon={<Category />} tabIndex={tabMenuEntries.backgroundItems} />
-                                <Divider orientation="vertical" />
+                                <Tab icon={<Visibility />} tabIndex={tabMenuEntries.exportAndView} />
                             </Tabs>
                         </Paper>
 
@@ -118,6 +120,10 @@ export function UserInterfaceTabs() {
                 <TabPanel value={selectedValue} index={tabMenuEntries.backgroundItems}
                     header="Background Items">
                     <BackgroundSimpleItemInterface />
+                </TabPanel>
+                <TabPanel value={selectedValue} index={tabMenuEntries.exportAndView}
+                    header="Export and View">
+                    <ExportAndViewInterface />
                 </TabPanel>
             </Box>
         </Box>
