@@ -5,12 +5,6 @@ import { Mutex } from 'async-mutex';
 
 const scrollFactor = 0.01;
 
-export interface IExportableLayer {
-    layer: Konva.Layer;
-    id: string;
-    isBackground: boolean;
-}
-
 export interface IData {
     stageHeight: number;
     stageWidth: number;
@@ -22,9 +16,10 @@ export interface IData {
     setPositionOffsetX: (newValue: number) => void;
     setPositionOffsetY: (newValue: number) => void;
     setScrollScaleFactor: (newValue: number) => void;
-    layers: IExportableLayer[];
-    addLayer: (stage: IExportableLayer) => Promise<void>;
-    removeLayer: (stageId: string) => Promise<void>;
+    includeBackground: boolean;
+    setIncludeBackground: (newValue: boolean) => void;
+    stage?: Konva.Stage;
+    setStage: (newStage: Konva.Stage) => void;
 }
 
 export const DataContext = React.createContext<IData>({
@@ -38,9 +33,10 @@ export const DataContext = React.createContext<IData>({
     setPositionOffsetX: (newValue: number) => { },
     setPositionOffsetY: (newValue: number) => { },
     setScrollScaleFactor: (newValue: number) => { },
-    layers: new Array<IExportableLayer>(),
-    addLayer: async (stage: IExportableLayer) => { },
-    removeLayer: async (stageId: string) => { }
+    includeBackground: true,
+    setIncludeBackground: (newValue: boolean) => { },
+    stage: undefined,
+    setStage: (newStage: Konva.Stage) => { }
 });
 
 export function DataContextWrapper(props: PropsWithChildren) {
@@ -48,49 +44,12 @@ export function DataContextWrapper(props: PropsWithChildren) {
     const [stageWidth, setStageWidth] = useState<number>(window.innerWidth);
     const [sizeScaleFactor, setSizeScaleFactor] = useState<number>(1);
     const [scrollScaleFactor, setScrollScaleFactor] = useState<number>(1);
-    const [generalScaleFactor, setGeneralScaleFactor] = useState<number>(1);
     const [positionOffsetX, setPositionOffsetX] = useState<number>(0);
     const [positionOffsetY, setPositionOffsetY] = useState<number>(0);
-    const [layers, setLayers] = useState<IExportableLayer[]>([]);
+    const [includeBackground, setIncludeBackground] = useState<boolean>(true);
+    const [stage, setStage] = useState<Konva.Stage | undefined>(undefined);
 
     const scrollScaleFactorRef = useRef<number>(1);
-    const layersMutex = useRef<Mutex>(new Mutex());
-
-    async function addLayer(stage: IExportableLayer): Promise<void> {
-        const release = await layersMutex.current.acquire();
-        try {
-            let currentLayers = layers;
-
-            if (!currentLayers.find(x => x.id === stage.id)) {
-                currentLayers = currentLayers.concat(stage);
-            } else {
-                currentLayers = currentLayers.map(x => {
-                    if (x.id === stage.id) {
-                        return stage;
-                    }
-
-                    return x;
-                })
-            }
-
-            setLayers(currentLayers);
-        } finally {
-            release();
-        }
-    }
-
-    async function removeLayer(stageId: string): Promise<void> {
-        const release = await layersMutex.current.acquire();
-        try {
-            let currentLayers = layers;
-
-            currentLayers = currentLayers.filter(x => x.id !== stageId);
-
-            setLayers(currentLayers);
-        } finally {
-            release();
-        }
-    }
 
     function handleWheel(event: WheelEvent) {
         // how to scale? Zoom in? Or zoom out?
@@ -107,11 +66,7 @@ export function DataContextWrapper(props: PropsWithChildren) {
     }
 
     useEffect(() => {
-        setGeneralScaleFactor(sizeScaleFactor * scrollScaleFactor);
-    }, [sizeScaleFactor, scrollScaleFactor])
-
-    useEffect(() => {
-        const handleResize = () => setTimeout(() => {
+        const resize = () => {
             const windowHeight = window.innerHeight;
             const windowWidth = window.innerWidth;
 
@@ -120,10 +75,16 @@ export function DataContextWrapper(props: PropsWithChildren) {
 
             const sizeScaleFactor = GetSizeScaleFactor(windowHeight);
             setSizeScaleFactor(sizeScaleFactor);
+        }
+
+        const handleResize = () => setTimeout(() => {
+            resize()
         }, 100)
 
         window.addEventListener('resize', handleResize);
         window.addEventListener('wheel', handleWheel);
+
+        resize();
 
         return () => {
             window.removeEventListener('resize', handleResize);
@@ -133,14 +94,20 @@ export function DataContextWrapper(props: PropsWithChildren) {
 
     return (
         <DataContext.Provider value={{
-            stageHeight: stageHeight, stageWidth: stageWidth, sizeScaleFactor: sizeScaleFactor,
-            generalScaleFactor: generalScaleFactor, scrollScaleFacor: scrollScaleFactor,
-            positionOffsetX: positionOffsetX, setPositionOffsetX: setPositionOffsetX,
-            positionOffsetY: positionOffsetY, setPositionOffsetY: setPositionOffsetY,
+            stageHeight: stageHeight,
+            stageWidth: stageWidth,
+            sizeScaleFactor: sizeScaleFactor,
+            generalScaleFactor: sizeScaleFactor * scrollScaleFactor,
+            scrollScaleFacor: scrollScaleFactor,
+            positionOffsetX: positionOffsetX,
+            setPositionOffsetX: setPositionOffsetX,
+            positionOffsetY: positionOffsetY,
+            setPositionOffsetY: setPositionOffsetY,
             setScrollScaleFactor: setScrollScaleFactor,
-            addLayer,
-            removeLayer,
-            layers
+            stage,
+            setStage,
+            includeBackground,
+            setIncludeBackground
         }}>
             {props.children}
         </DataContext.Provider>

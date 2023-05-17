@@ -1,6 +1,6 @@
 import { PropsWithChildren, useContext, useState } from "react";
 import { backgroundSimpleItemContext } from "../../data/context/backgroundSimpleItemContext";
-import { Badge, Box, Divider, Tab, Tabs, Typography } from "@mui/material";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { CreateNewSimpleItemData } from "../../helper/factory";
 import { SelectedTabInterface } from "../../components/SelectedTabInterface";
 import { NameField } from "../../components/elementInterface/NameField";
@@ -14,7 +14,7 @@ import { SizeableElementInterfaceBase } from "../bases/SizeableElementInterfaceB
 import { HasBorderInterfaceBase } from "../bases/HasBorderInterfaceBase";
 import { HasOpacityInterfaceBase } from "../bases/HasOpacityInterfaceBase";
 import { SkewableInterfaceBase } from "../bases/SkewableInterfaceBase";
-import { ColorLens, Radar } from "@mui/icons-material";
+import { Badge, ColorLens, Radar } from "@mui/icons-material";
 
 function GeneralInterface() {
     var itemContext = useContext(backgroundSimpleItemContext);

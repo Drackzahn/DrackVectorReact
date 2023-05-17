@@ -1,25 +1,22 @@
 import { useContext } from "react";
-import { Group, Layer } from "react-konva"
+import { Group } from "react-konva"
 import { BackgroundFarGrafic } from "./BackgroundFarGrafic";
 import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
 import { backgroundGroundContext } from "../data/context/backgroundGroundContext";
-import { ScalingStage } from "../canvas/ScalingStage";
 import { backgroundSimpleItemContext } from "../data/context/backgroundSimpleItemContext";
 import { SimpleItemGrafic } from "./SimpleItemGrafic";
 import { DrackLayer } from "../canvas/DrackLayer";
 
 export function BackgroundGrafic() {
     return (
-        <ScalingStage>
-            <DrackLayer isBackgroundLayer>
-                <Group>
-                    <BackgroundFarGraficContainer />
-                </Group>
-                <BackgroundGroundsGraficContainer />
-                <BackgroundItemsGraficContainer />
-            </DrackLayer>
-        </ScalingStage >
+        <DrackLayer>
+            <Group>
+                <BackgroundFarGraficContainer />
+            </Group>
+            <BackgroundGroundsGraficContainer />
+            <BackgroundItemsGraficContainer />
+        </DrackLayer>
     )
 }
 

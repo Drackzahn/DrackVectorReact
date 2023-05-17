@@ -5,21 +5,24 @@ import { UserInterfaceTabs } from "./UserInterfaceTabs";
 
 export function DrackVectorInterface(props: PropsWithChildren) {
     return (
-        <Box
-            display="grid">
+        <>
+            <div id="container"></div>
             <Box
-                gridColumn={1}
-                gridRow={1}
-                zIndex={0}>
-                <Canvas />
-            </Box>
+                display="grid">
+                <Box
+                    gridColumn={1}
+                    gridRow={1}
+                    zIndex={0}>
+                    <Canvas />
+                </Box>
 
-            <Box
-                gridColumn={1}
-                gridRow={1}
-                zIndex={1}>
-                <UserInterfaceTabs />
+                <Box
+                    gridColumn={1}
+                    gridRow={1}
+                    zIndex={1}>
+                    <UserInterfaceTabs />
+                </Box>
             </Box>
-        </Box>
+        </>
     )
 }

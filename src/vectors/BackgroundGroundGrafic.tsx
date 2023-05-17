@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { DataContext } from "../data/context/dataContext";
 import { Rect } from "react-konva";
 import { FallbackGrafic } from "./FallbackGrafic";
-import { GetFillingWidth } from "../helper/getFillSizes";
+import { useFillingWidth } from "../helper/getFillSizes";
 
 export interface IBackgroundGroundGraficProps {
     background: backgroundGroundData | undefined;
@@ -29,7 +29,7 @@ export function BackgroundGroundGrafic(props: IBackgroundGroundGraficProps) {
 function FlatColorGrafic(props: IBackgroundGroundGraficProps) {
     var data = useContext(DataContext);
 
-    const width = GetFillingWidth(data);
+    const [width] = useFillingWidth();
     const height = props.background!.height;
 
     const verticalStartPosition = props.background?.verticalPosition ?? 0;

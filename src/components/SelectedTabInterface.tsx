@@ -14,9 +14,10 @@ export function SelectedTabInterface<T extends IDataBase>(props: PropsWithChildr
         <Box
             display="grid"
             gridTemplateAreas="'dataArea selectionArea'"
-            gridTemplateColumns="auto auto"
+            gridTemplateColumns="1fr auto"
             gridTemplateRows="1fr"
-            gap={4}>
+            gap={4}
+        >
 
             <Box
                 gridArea="selectionArea"
@@ -30,7 +31,8 @@ export function SelectedTabInterface<T extends IDataBase>(props: PropsWithChildr
                     sx={{
                         overflowY: "auto"
                     }}
-                    maxHeight={data.stageHeight - 300}>
+                    maxHeight={data.stageHeight - 300}
+                    width="500px">
                     {props.children}
                 </Box>
             }

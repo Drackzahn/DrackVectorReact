@@ -1,11 +1,12 @@
-import { Card, CardContent, CardHeader, Divider, Paper, Switch, Tab, Tabs, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, IconButton, Paper, Switch, Tab, Tabs, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { PropsWithChildren, useState } from "react";
 import { BackgroundFarInterface } from "./background/BackgroundFarInterface";
 import { BackgroundGroundInterface } from "./background/BackgroundGroundInterface";
-import { Category, DoorFront, Grass, Visibility, Wallpaper } from "@mui/icons-material";
+import { Category, DoorFront, Grass, Settings, Visibility, Wallpaper } from "@mui/icons-material";
 import { BackgroundSimpleItemInterface } from "./items/BackgroundSimpleItemInterface";
 import { ExportAndViewInterface } from "./ExportAndViewInterface";
+import { SettingsView } from "./SettingsView";
 
 enum tabMenuEntries {
     farBackground = 0,
@@ -38,16 +39,18 @@ function TabPanel(props: PropsWithChildren<ITabPanelProps>) {
             <CardHeader
                 title={header} />
             <CardContent>
-                {children}
+                <Box padding={2}>
+                    {children}
+                </Box>
             </CardContent>
         </Card>
     )
 }
 
 export function UserInterfaceTabs() {
-
     const [selectedValue, setSelectedValue] = useState<number>(0);
     const [isInterfaceVisible, setIsInterfaceVisible] = useState<boolean>(true);
+    const [isSettingsModalOpen, setIsSettingsModalOpen] = useState<boolean>(false);
 
     const handleChange = (event: React.SyntheticEvent, newValue: number) => {
         setSelectedValue(newValue);
@@ -65,8 +68,8 @@ export function UserInterfaceTabs() {
                 gridArea="Tabs"
                 margin={2}>
                 <Box display="grid"
-                    gridTemplateAreas="'InterfaceSwitch Tabs'"
-                    gridTemplateColumns="auto 1fr"
+                    gridTemplateAreas="'InterfaceSwitch Settings Tabs'"
+                    gridTemplateColumns="auto auto 1fr"
                     columnGap={1}>
                     <Box gridArea="InterfaceSwitch"
                         display="inline-block">
@@ -77,6 +80,21 @@ export function UserInterfaceTabs() {
                                 checked={isInterfaceVisible}
                                 onChange={(event) => setIsInterfaceVisible(event.target.checked)}
                             />
+                        </Paper>
+                    </Box>
+
+                    <Box gridArea="Settings">
+                        <Paper sx={{
+                            height: "100%"
+                        }}>
+                            <>
+                                <IconButton onClick={() => setIsSettingsModalOpen(true)}>
+                                    <Settings />
+                                </IconButton>
+                                <SettingsView
+                                    isOpen={isSettingsModalOpen}
+                                    setIsOpen={setIsSettingsModalOpen} />
+                            </>
                         </Paper>
                     </Box>
 

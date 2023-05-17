@@ -51,7 +51,6 @@ function ViewArea() {
 function ExportArea() {
     const data = useContext(DataContext);
     const [pixelRatioExport, setPixelRatioExport] = useState<number>(1);
-    const [includeBackground, setIncludeBackground] = useState<boolean>(true);
 
     function downloadURI(uri: string, name: string) {
         var link = document.createElement('a');
@@ -63,27 +62,7 @@ function ExportArea() {
     }
 
     function exportImage() {
-        //TODO Combine ScalingStage and this somewhere to avoid duplicate code
-        const scaledOffset = {
-            x: data.positionOffsetX * data.scrollScaleFacor,
-            y: data.positionOffsetY * data.scrollScaleFacor
-        }
-
-        const stage = new Konva.Stage({
-            container: 'container',
-            height: data.stageHeight,
-            width: data.stageWidth,
-            offset: scaledOffset,
-            scaleX: data.generalScaleFactor,
-            scaleY: data.generalScaleFactor
-        });
-
-        data.layers.forEach(x => {
-            if (includeBackground || !x.isBackground)
-                stage.add(x.layer);
-        })
-
-        const dataUrl = stage.toDataURL({ pixelRatio: pixelRatioExport });
+        const dataUrl = data.stage!.toDataURL({ pixelRatio: pixelRatioExport });
 
         downloadURI(dataUrl, 'image.png');
     }
@@ -108,10 +87,10 @@ function ExportArea() {
 
             <Box gridArea="IncludeBackground">
                 <FormControlLabel
-                    control={<Switch defaultChecked />}
+                    control={<Switch />}
                     label="Include Background"
-                    checked={includeBackground}
-                    onChange={(_, checked) => setIncludeBackground(checked)}
+                    checked={data.includeBackground}
+                    onChange={(_, checked) => data.setIncludeBackground(checked)}
                 />
             </Box>
 

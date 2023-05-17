@@ -1,10 +1,25 @@
+import { useContext, useEffect, useState } from "react";
 import { StandardHeight } from "../canvas/DrackVectorConstants";
-import { IData } from "../data/context/dataContext";
+import { DataContext } from "../data/context/dataContext";
 
-export function GetFillingHeight(data: IData): number {
-    return StandardHeight / data.generalScaleFactor;
+export function useFillingHeight() {
+    const data = useContext(DataContext);
+    const [fillingHeight, setFillingHeight] = useState<number>(StandardHeight);
+
+    useEffect(() => {
+        setFillingHeight(StandardHeight * data.generalScaleFactor);
+    }, [data.generalScaleFactor])
+
+    return [fillingHeight];
 }
 
-export function GetFillingWidth(data: IData): number {
-    return data.stageWidth / data.generalScaleFactor;
+export function useFillingWidth() {
+    const data = useContext(DataContext);
+    const [fillingWidth, setFillingWidth] = useState<number>(StandardHeight);
+
+    useEffect(() => {
+        setFillingWidth(data.stageWidth * data.generalScaleFactor);
+    }, [data])
+
+    return [fillingWidth];
 }

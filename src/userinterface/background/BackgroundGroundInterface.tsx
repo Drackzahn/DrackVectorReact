@@ -51,7 +51,8 @@ export function BackgroundGroundInterface() {
                     display="grid"
                     gridTemplateAreas="'Name' 'Type' 'LayerPosition' 'Colors' 'Divider' 'VerticalPositon' 'Height'"
                     gridTemplateColumns="auto"
-                    gap={4}>
+                    gap={4}
+                    paddingTop={4}>
 
                     <Box
                         gridArea="Divider">

@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { Rect } from "react-konva";
 import { backgroundFarData, backgroundFarType } from "../data/backgroundFarData";
-import { DataContext } from "../data/context/dataContext";
-import { GetFillingHeight, GetFillingWidth } from "../helper/getFillSizes";
+import { useFillingHeight, useFillingWidth } from "../helper/getFillSizes";
 
 export interface IBackgroundFarGraficProps {
     background: backgroundFarData | undefined;
@@ -25,10 +24,8 @@ export function BackgroundFarGrafic(props: IBackgroundFarGraficProps) {
 }
 
 function BlueSkyGrafic(props: IBackgroundFarGraficProps) {
-    var data = useContext(DataContext);
-
-    const width = GetFillingWidth(data);
-    const height = GetFillingHeight(data);
+    const [height] = useFillingHeight();
+    const [width] = useFillingWidth();
 
     const linearStartPoint = {
         x: width / 2,
@@ -39,6 +36,8 @@ function BlueSkyGrafic(props: IBackgroundFarGraficProps) {
         x: width / 2,
         y: height
     }
+
+    console.info(`Sky Height: ${height}`);
 
     const firstColor = props.background?.firstColor ?? "#FFFFFF";
     const secondColor = props.background?.secondColor ?? "#FFFFFF";
