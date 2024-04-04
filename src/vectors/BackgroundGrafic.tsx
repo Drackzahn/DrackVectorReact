@@ -4,7 +4,7 @@ import { BackgroundFarGrafic } from "./BackgroundFarGrafic";
 import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
 import { backgroundGroundContext } from "../data/context/backgroundGroundContext";
-import { backgroundSimpleItemContext } from "../data/context/backgroundSimpleItemContext";
+import { BackgroundSimpleItemContext } from "../data/context/backgroundSimpleItemContext";
 import { SimpleItemGrafic } from "./SimpleItemGrafic";
 import { DrackLayer } from "../canvas/DrackLayer";
 
@@ -42,7 +42,7 @@ export function BackgroundGroundsGraficContainer() {
 }
 
 export function BackgroundItemsGraficContainer() {
-    var data = useContext(backgroundSimpleItemContext);
+    var data = useContext(BackgroundSimpleItemContext);
 
     return (
         <Group>

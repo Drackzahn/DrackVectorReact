@@ -1,5 +1,5 @@
 import { Circle, Group, KonvaNodeComponent, Layer, Rect } from "react-konva";
-import { simpleItemData, simpleItemDataType } from "../data/items/simpleItemData";
+import { simpleItemData, simpleItemDataType } from "../data/figures/items/simpleItemData";
 import { FallbackGrafic } from "./FallbackGrafic";
 import { GetHasBorderColor, GetHasBorderThickness } from "../data/baseInterfaces/IHasBorder";
 import { useEffect, useRef } from "react";

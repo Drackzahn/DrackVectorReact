@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { backgroundGroundData, backgroundGroundType } from "../data/backgroundGroundData";
 import { StandardHeight } from '../canvas/DrackVectorConstants';
-import { simpleItemData, simpleItemDataType } from '../data/items/simpleItemData';
+import { simpleItemData, simpleItemDataType } from '../data/figures/items/simpleItemData';
 import { DoesBackgroundGroundUseColors, DoesSimpleItemUseColors } from './colorUseDecider';
 
 export function CreateNewBackgroundGroundData(): backgroundGroundData {

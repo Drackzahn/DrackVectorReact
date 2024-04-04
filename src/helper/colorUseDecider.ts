@@ -1,6 +1,6 @@
 import { backgroundFarType } from "../data/backgroundFarData";
 import { backgroundGroundType } from "../data/backgroundGroundData";
-import { simpleItemDataType } from "../data/items/simpleItemData";
+import { simpleItemDataType } from "../data/figures/items/simpleItemData";
 
 export function DoesBackgroundFarTypeUseSecondColor(type: backgroundFarType) {
     switch (type) {
