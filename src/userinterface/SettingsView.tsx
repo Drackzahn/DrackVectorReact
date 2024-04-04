@@ -11,7 +11,7 @@ export function SettingsView(props: ISettingsViewProps) {
     const settings = useContext(SettingsContext);
 
     const handleThemeChange = (event: SelectChangeEvent) => {
-        settings.setTheme(event.target.value as DrackTheme);
+        settings.setTheme(Number(event.target.value) as DrackTheme);
     }
 
     return (
@@ -49,6 +49,7 @@ export function SettingsView(props: ISettingsViewProps) {
                             label="Theme"
                             onChange={handleThemeChange}>
                             <MenuItem value={DrackTheme.green}>Green</MenuItem>
+                            <MenuItem value={DrackTheme.red}>Red</MenuItem>
                         </Select>
                     </FormControl>
                 </Box>

@@ -1,7 +1,8 @@
 import { PropsWithChildren, createContext, useState } from "react"
 
 export enum DrackTheme {
-    green = "Green"
+    green,
+    red
 }
 
 export interface ISettings {

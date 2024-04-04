@@ -2,13 +2,21 @@ import { PropsWithChildren, useContext, useEffect, useState } from "react";
 import { DrackTheme, SettingsContext } from "../../data/settings/SettingsContext";
 import { ThemeProvider } from "@emotion/react";
 import { Theme, createTheme } from "@mui/material";
-import { green } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 
 // TODO create more Themes
 const greenTheme = createTheme({
     palette: {
         primary: {
             main: green[500]
+        }
+    }
+})
+
+const redTheme = createTheme({
+    palette: {
+        primary: {
+            main: red[500]
         }
     }
 })
@@ -21,6 +29,10 @@ export function DrackThemeProvider(props: PropsWithChildren) {
         switch (settings.selectedTheme) {
             case DrackTheme.green:
                 setTheme(greenTheme);
+                break;
+            case DrackTheme.red:
+                setTheme(redTheme);
+                break;
         }
     }, [settings])
 
