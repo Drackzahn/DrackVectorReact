@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { Group } from "react-konva"
+import { Group } from "react-konva";
 import { BackgroundFarGrafic } from "./BackgroundFarGrafic";
 import { BackgroundGroundGrafic } from "./BackgroundGroundGrafic";
 import { backgroundFarContext } from "../data/context/backgroundFarContext";
@@ -9,47 +9,47 @@ import { SimpleItemGrafic } from "./SimpleItemGrafic";
 import { DrackLayer } from "../canvas/DrackLayer";
 
 export function BackgroundGrafic() {
-    return (
-        <DrackLayer>
-            <Group>
-                <BackgroundFarGraficContainer />
-            </Group>
-            <BackgroundGroundsGraficContainer />
-            <BackgroundItemsGraficContainer />
-        </DrackLayer>
-    )
+  return (
+    <DrackLayer>
+      <Group>
+        <BackgroundFarGraficContainer />
+      </Group>
+      <BackgroundGroundsGraficContainer />
+      <BackgroundItemsGraficContainer />
+    </DrackLayer>
+  );
 }
 
 export function BackgroundFarGraficContainer() {
-    var data = useContext(backgroundFarContext);
+  var data = useContext(backgroundFarContext);
 
-    return (
-        <BackgroundFarGrafic background={data.backgroundFarData} />
-    )
+  return <BackgroundFarGrafic background={data.backgroundFarData} />;
 }
 
 export function BackgroundGroundsGraficContainer() {
-    var data = useContext(backgroundGroundContext);
+  var data = useContext(backgroundGroundContext);
 
-    return (
-        <Group>
-            {data.datas.sort(x => x.layerPosition).map((background) => (
-                <BackgroundGroundGrafic background={background}
-                    key={background.id} />
-            ))}
-        </Group>
-    )
+  return (
+    <Group>
+      {data.datas
+        .sort((x) => x.layerPosition)
+        .map((background) => (
+          <BackgroundGroundGrafic background={background} key={background.id} />
+        ))}
+    </Group>
+  );
 }
 
 export function BackgroundItemsGraficContainer() {
-    var data = useContext(BackgroundSimpleItemContext);
+  var data = useContext(BackgroundSimpleItemContext);
 
-    return (
-        <Group>
-            {data.datas.sort(x => x.layerPosition).map((item) => (
-                <SimpleItemGrafic item={item}
-                    key={item.id} />
-            ))}
-        </Group>
-    )
+  return (
+    <Group>
+      {data!.datas
+        .sort((x) => x.layerPosition)
+        .map((item) => (
+          <SimpleItemGrafic item={item} key={item.id} />
+        ))}
+    </Group>
+  );
 }

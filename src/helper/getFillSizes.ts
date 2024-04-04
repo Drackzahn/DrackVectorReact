@@ -3,23 +3,23 @@ import { StandardHeight } from "../canvas/DrackVectorConstants";
 import { DataContext } from "../data/context/dataContext";
 
 export function useFillingHeight() {
-    const data = useContext(DataContext);
-    const [fillingHeight, setFillingHeight] = useState<number>(StandardHeight);
+  const data = useContext(DataContext);
+  const [fillingHeight, setFillingHeight] = useState<number>(StandardHeight);
 
-    useEffect(() => {
-        setFillingHeight(StandardHeight * data.generalScaleFactor);
-    }, [data.generalScaleFactor])
+  useEffect(() => {
+    setFillingHeight(StandardHeight);
+  }, [data!.generalScaleFactor]);
 
-    return [fillingHeight];
+  return [fillingHeight];
 }
 
 export function useFillingWidth() {
-    const data = useContext(DataContext);
-    const [fillingWidth, setFillingWidth] = useState<number>(StandardHeight);
+  const data = useContext(DataContext);
+  const [fillingWidth, setFillingWidth] = useState<number>(StandardHeight);
 
-    useEffect(() => {
-        setFillingWidth(data.stageWidth * data.generalScaleFactor);
-    }, [data])
+  useEffect(() => {
+    setFillingWidth(data!.stageWidth);
+  }, [data]);
 
-    return [fillingWidth];
+  return [fillingWidth];
 }

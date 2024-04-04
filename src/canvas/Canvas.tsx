@@ -5,35 +5,28 @@ import { DataContext } from "../data/context/dataContext";
 import { ScalingStage } from "./ScalingStage";
 
 export function Canvas() {
-    const data = useContext(DataContext);
+  const data = useContext(DataContext);
 
-    if (data.includeBackground) {
-        return (
-            <ScalingStage isImageStage>
-                <BackgroundGrafic />
-                {/* TODO Add Person Layer here */}
-            </ScalingStage>
-        )
-    }
-
+  if (data!.includeBackground) {
     return (
-        <Box
-            display="grid">
-            <Box
-                gridColumn={1}
-                gridRow={1}
-                zIndex={0}>
-                <ScalingStage isImageStage={false}>
-                    <BackgroundGrafic />
-                </ScalingStage>
-            </Box>
+      <ScalingStage isImageStage>
+        <BackgroundGrafic />
+        {/* TODO Add Person Layer here */}
+      </ScalingStage>
+    );
+  }
 
-            <Box
-                gridColumn={1}
-                gridRow={1}
-                zIndex={1}>
-                {/* TODO Add Person Layer here */}
-            </Box>
-        </Box>
-    )
+  return (
+    <Box display="grid">
+      <Box gridColumn={1} gridRow={1} zIndex={0}>
+        <ScalingStage isImageStage={false}>
+          <BackgroundGrafic />
+        </ScalingStage>
+      </Box>
+
+      <Box gridColumn={1} gridRow={1} zIndex={1}>
+        {/* TODO Add Person Layer here */}
+      </Box>
+    </Box>
+  );
 }
