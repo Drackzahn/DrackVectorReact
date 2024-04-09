@@ -1,4 +1,5 @@
-import { Box, Input, Slider, Typography } from "@mui/material";
+import { Box, InputAdornment, Slider, Typography } from "@mui/material";
+import { DrackTextField } from "./DrackTextField";
 
 export interface IDrackSliderProps {
   maxValue: number;
@@ -8,15 +9,20 @@ export interface IDrackSliderProps {
   disabled?: boolean;
   updatedSelectedValue: (newValue: number) => void;
   step?: number;
+  endAdormentText?: string;
 }
 
 export function DrackSlider(props: IDrackSliderProps) {
   const handleChange = (event: Event, newValue: number | number[]) => {
-    props.updatedSelectedValue(newValue as number);
+    updateValue(newValue as number);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.updatedSelectedValue(Number(event.target.value));
+    updateValue(Number(event.target.value));
+  };
+
+  const updateValue = (newValue: number) => {
+    props.updatedSelectedValue(Math.round(newValue));
   };
 
   const disabled = props.disabled ?? false;
@@ -24,24 +30,34 @@ export function DrackSlider(props: IDrackSliderProps) {
   return (
     <Box
       display="grid"
-      gridTemplateAreas="'. Label .' 'Slider Slider ValueBox'"
+      gridTemplateAreas="'Label'  'Slider'  'ValueBox'"
       padding={1}
     >
       <Box gridArea="Label">
-        <Typography>{props.label}</Typography>
+        <Typography align="center">{props.label}</Typography>
       </Box>
       <Box gridArea="ValueBox" marginLeft={2}>
-        <Input
+        <DrackTextField
           value={props.selectedValue}
           size="small"
           onChange={handleInputChange}
+          type="number"
           inputProps={{
-            step: props.step ?? 1,
             min: props.minValue,
             max: props.maxValue,
-            type: "number",
           }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                {props.endAdormentText}
+              </InputAdornment>
+            ),
+          }}
+          label={props.label}
           disabled={disabled}
+          sx={{
+            width: "150px",
+          }}
         />
       </Box>
       <Box gridArea="Slider">
@@ -52,8 +68,7 @@ export function DrackSlider(props: IDrackSliderProps) {
           valueLabelDisplay="auto"
           onChange={handleChange}
           disabled={disabled}
-          step={props.step}
-          size="small"
+          step={props.step ?? 1}
         />
       </Box>
     </Box>

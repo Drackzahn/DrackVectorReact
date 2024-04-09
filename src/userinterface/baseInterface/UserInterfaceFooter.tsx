@@ -6,11 +6,12 @@ import {
   Category,
   Visibility,
 } from "@mui/icons-material";
-import { Box, Paper, Switch, IconButton, Tabs, Tab } from "@mui/material";
+import { Box, Switch, IconButton, Tabs, Tab } from "@mui/material";
 import { SettingsView } from "../SettingsView";
 import { useContext, useState } from "react";
 import { DataContext } from "../../data/context/dataContext";
 import { tabMenuEntries } from "./tabMenuEntries";
+import { DrackCentralPaper } from "../../components/DrackCentralPaper";
 
 export function UserInterfaceFooter() {
   const dataContext = useContext(DataContext);
@@ -28,26 +29,18 @@ export function UserInterfaceFooter() {
         width="fit-content"
       >
         <Box gridArea="InterfaceSwitch" display="inline-block">
-          <Paper
-            sx={{
-              height: "100%",
-            }}
-          >
+          <DrackCentralPaper>
             <Switch
               checked={dataContext!.isInterfaceVisible}
               onChange={(event) =>
                 dataContext!.setIsInterfaceVisible(event.target.checked)
               }
             />
-          </Paper>
+          </DrackCentralPaper>
         </Box>
 
         <Box gridArea="Settings">
-          <Paper
-            sx={{
-              height: "100%",
-            }}
-          >
+          <DrackCentralPaper>
             <>
               <IconButton onClick={() => setIsSettingsModalOpen(true)}>
                 <Settings />
@@ -57,14 +50,14 @@ export function UserInterfaceFooter() {
                 setIsOpen={setIsSettingsModalOpen}
               />
             </>
-          </Paper>
+          </DrackCentralPaper>
         </Box>
 
         <Box
           gridArea="Tabs"
           visibility={dataContext!.isInterfaceVisible ? "visible" : "hidden"}
         >
-          <Paper>
+          <DrackCentralPaper>
             <Tabs
               orientation="horizontal"
               variant="standard"
@@ -96,7 +89,7 @@ export function UserInterfaceFooter() {
                 tabIndex={tabMenuEntries.exportAndView}
               />
             </Tabs>
-          </Paper>
+          </DrackCentralPaper>
         </Box>
       </Box>
     </Box>

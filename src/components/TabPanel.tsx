@@ -20,10 +20,11 @@ export function TabPanel(props: PropsWithChildren<ITabPanelProps>) {
                 'Children' 
                 "
       gridTemplateColumns="auto"
-      gap={4}
+      gridTemplateRows="auto 1fr"
+      gap={2}
     >
       <Box gridArea="Name">
-        <Typography>{props.header}</Typography>
+        <Typography variant="h5">{props.header}</Typography>
       </Box>
       <Box gridArea="Children">{props.children}</Box>
     </Box>

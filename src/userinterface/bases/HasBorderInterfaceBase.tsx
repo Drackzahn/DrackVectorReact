@@ -1,6 +1,8 @@
 import { Box, Checkbox, TextField } from "@mui/material";
 import { IHasBorder } from "../../data/baseInterfaces/IHasBorder";
 import { ColorBox } from "../../components/ColorBox";
+import { DrackTextField } from "../../components/DrackTextField";
+import { DrackSwitch } from "../../components/elementInterface/DrackSwitch";
 
 export interface IHasBorderInterfaceBaseProps<T extends IHasBorder> {
   value: T;
@@ -23,12 +25,15 @@ export function HasBorderInterfaceBase<T extends IHasBorder>(
   }
 
   return (
-    <Box display="grid" gridTemplateAreas="'Field Color Active'">
-      <Box gridArea="Field">
-        <TextField
+    <Box
+      display="grid"
+      gridTemplateAreas="'Field Color Active'"
+      gridTemplateColumns="auto auto auto"
+    >
+      <Box gridArea="Field" display="grid" alignContent="center">
+        <DrackTextField
           value={props.value.borderThickness}
           onChange={(event) => onChange(Number(event.target.value))}
-          fullWidth
           type="number"
           label="Border"
           InputProps={{
@@ -37,20 +42,24 @@ export function HasBorderInterfaceBase<T extends IHasBorder>(
               max: 10,
             },
           }}
+          sx={{
+            width: "100px",
+          }}
           disabled={!props.value.isBorderActive}
         />
       </Box>
-      <Box gridArea="Color">
+      <Box gridArea="Color" display="grid" alignContent="center">
         <ColorBox
           color={props.value.borderColor}
           setColor={setColor}
           isActive={props.value.isBorderActive}
         />
       </Box>
-      <Box gridArea="Active">
-        <Checkbox
-          checked={props.value.isBorderActive}
-          onChange={(_event, checked) => onSetChange(checked)}
+      <Box gridArea="Active" display="grid" alignContent="center">
+        <DrackSwitch
+          label="Border Active"
+          isChecked={props.value.isBorderActive}
+          onChange={onSetChange}
         />
       </Box>
     </Box>

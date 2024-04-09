@@ -29,7 +29,7 @@ function TabPanel(props: PropsWithChildren<ITabPanelProps>) {
     >
       <CardHeader title={header} />
       <CardContent>
-        <Box padding={2}>{children}</Box>
+        <Box>{children}</Box>
       </CardContent>
     </Card>
   );

@@ -71,7 +71,6 @@ function HumanHeadInterface() {
         'Position'
         'Size'
         "
-      width="400px"
       gap={2}
     >
       <Box gridArea="HeadType">
@@ -87,14 +86,14 @@ function HumanHeadInterface() {
         display="grid"
         gridTemplateAreas="'SkinColor Override'"
       >
-        <Box gridArea="SkinColor">
+        <Box gridArea="SkinColor" display="grid" alignContent="center">
           <ColorBox
             color={figureContext!.selectedData!.head.skinColorHex}
             setColor={setSkinColor}
             isActive={true}
           />
         </Box>
-        <Box gridArea="HeadOverrideType">
+        <Box gridArea="Override" display="grid" alignContent="center">
           <DrackSwitch
             label="Override Color"
             isChecked={figureContext!.selectedData!.head.overrideSkinColor}

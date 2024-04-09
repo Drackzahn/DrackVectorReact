@@ -39,31 +39,38 @@ export function SizeableElementInterfaceBase<T extends ISizeableElement>(
   return (
     <Box
       display="grid"
-      gridTemplateAreas="'SizeX SizeY CombineSize'"
+      gridTemplateAreas="
+      'CombineSize CombineSize'
+      'SizeX SizeY'
+      "
+      gridTemplateColumns="1fr 1fr"
+      gridTemplateRows="auto auto"
       columnGap={2}
     >
       <Box gridArea="SizeX">
         <DrackSlider
           label="Width"
-          maxValue={500}
-          minValue={1}
+          maxValue={200}
+          minValue={50}
           selectedValue={props.value.scaleX * 100}
           updatedSelectedValue={setX}
+          endAdormentText="/100 %"
         />
       </Box>
       <Box gridArea="SizeY">
         <DrackSlider
           label="Height"
-          maxValue={500}
-          minValue={1}
+          maxValue={200}
+          minValue={50}
           selectedValue={props.value.scaleY * 100}
           updatedSelectedValue={setY}
           disabled={props.value.combineScaling}
+          endAdormentText="/100 %"
         />
       </Box>
       <Box gridArea="CombineSize">
         <DrackSwitch
-          label="Combine"
+          label="Combine Sizes"
           isChecked={props.value.combineScaling}
           onChange={setCombined}
         />
