@@ -6,6 +6,7 @@ import { BackgroundSimpleItemInterface } from "../items/BackgroundSimpleItemInte
 import { ExportAndViewInterface } from "../ExportAndViewInterface";
 import { DataContext } from "../../data/context/dataContext";
 import { tabMenuEntries } from "./tabMenuEntries";
+import { FiguresBaseInterface } from "../figures/FiguresBaseInterface";
 
 interface ITabPanelProps {
   index: number;
@@ -74,6 +75,13 @@ export function UserInterfaceTabs() {
         header="Background Items"
       >
         <BackgroundSimpleItemInterface />
+      </TabPanel>
+      <TabPanel
+        value={dataContext!.selectedTab}
+        index={tabMenuEntries.humanoidFigures}
+        header="Figures"
+      >
+        <FiguresBaseInterface />
       </TabPanel>
       <TabPanel
         value={dataContext!.selectedTab}

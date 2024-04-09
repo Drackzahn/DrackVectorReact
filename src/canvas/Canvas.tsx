@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { BackgroundGrafic } from "../vectors/BackgroundGrafic";
 import { DataContext } from "../data/context/dataContext";
 import { ScalingStage } from "./ScalingStage";
+import { FiguresGrafic } from "../vectors/figures/FiguresGrafic";
 
 export function Canvas() {
   const data = useContext(DataContext);
@@ -11,7 +12,7 @@ export function Canvas() {
     return (
       <ScalingStage isImageStage>
         <BackgroundGrafic />
-        {/* TODO Add Person Layer here */}
+        <FiguresGrafic />
       </ScalingStage>
     );
   }
@@ -25,7 +26,9 @@ export function Canvas() {
       </Box>
 
       <Box gridColumn={1} gridRow={1} zIndex={1}>
-        {/* TODO Add Person Layer here */}
+        <ScalingStage isImageStage={false}>
+          <FiguresGrafic />
+        </ScalingStage>
       </Box>
     </Box>
   );

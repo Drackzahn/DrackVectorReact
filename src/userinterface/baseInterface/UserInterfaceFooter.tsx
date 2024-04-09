@@ -88,6 +88,10 @@ export function UserInterfaceFooter() {
                 tabIndex={tabMenuEntries.backgroundItems}
               />
               <Tab
+                icon={<Category />}
+                tabIndex={tabMenuEntries.humanoidFigures}
+              />
+              <Tab
                 icon={<Visibility />}
                 tabIndex={tabMenuEntries.exportAndView}
               />

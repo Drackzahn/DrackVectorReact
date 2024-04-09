@@ -11,6 +11,7 @@ import {
 import { useEffect, useRef } from "react";
 import Konva from "konva";
 import React from "react";
+import { ScaleableGroup } from "./ScaleableGroup";
 
 const BaseItemSize = 50;
 
@@ -19,30 +20,10 @@ export interface ISimpleItemGraficProps {
 }
 
 export function SimpleItemGrafic(props: ISimpleItemGraficProps) {
-  if (props.item === null) return <FallbackGrafic />;
-
-  const groupRef: React.RefObject<Konva.Group> = React.createRef();
-
-  useEffect(() => {
-    if (groupRef.current !== null && props.item !== null) {
-      groupRef.current!.skew({
-        x: props.item!.skewX,
-        y: props.item!.skewY,
-      });
-    }
-  });
-
   return (
-    <Group
-      ref={groupRef}
-      x={props.item!.positionX}
-      y={props.item!.positionY}
-      scaleX={props.item!.scaleX}
-      scaleY={props.item!.scaleY}
-      opacity={props.item!.opacity}
-    >
+    <ScaleableGroup item={props.item}>
       <SimpleItemGraficInternal item={props.item} />
-    </Group>
+    </ScaleableGroup>
   );
 }
 
